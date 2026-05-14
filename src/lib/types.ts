@@ -11,6 +11,9 @@ export const roundEntrySchema = z.object({
   pointsGained: z.union([z.literal(3), z.literal(1), z.literal(0)]),
   accumulatedPoints: z.number().int().min(0),
   tablePosition: z.number().int().positive(),
+  /** Nota normalizada 0–10 (SofaScore/FotMob). */
+  rating: z.number().min(0).max(10).nullable().optional(),
+  ratingSource: z.enum(["sofascore", "fotmob"]).nullable().optional(),
 });
 
 export type RoundEntry = z.infer<typeof roundEntrySchema>;
@@ -25,6 +28,10 @@ export const seasonSummarySchema = z.object({
   points: z.number().int().min(0),
   finalPosition: z.number().int().positive().nullable(),
   pointsPercentage: z.number().min(0).max(100),
+  /** Média simples das rodadas com `rating` definido. */
+  averageRating: z.number().min(0).max(10).nullable().optional(),
+  /** Quantidade de rodadas com nota preenchida. */
+  ratingsCovered: z.number().int().min(0).optional(),
 });
 
 export type SeasonSummary = z.infer<typeof seasonSummarySchema>;

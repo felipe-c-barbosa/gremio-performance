@@ -6,7 +6,10 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import type { RoundEntry, SeasonData } from "../../src/lib/types";
-import { seasonDataSchema } from "../../src/lib/types";
+import {
+  finalizeSeasonWithRatings,
+  mergePreviousRatingsIntoRounds,
+} from "./ratingsMerge";
 
 const GREMIO_MARKERS = ["gremio", "grêmio"];
 
@@ -208,7 +211,11 @@ function buildTableAfterMatchdays(
 export function buildSeasonFromMatches(
   year: number,
   allMatches: ParsedMatch[],
-  options?: { updatedAt?: string; source?: string }
+  options?: {
+    updatedAt?: string;
+    source?: string;
+    previousSeason?: SeasonData | null;
+  }
 ): SeasonData {
   const gremioMatches = allMatches.filter((m) => isGremio(m.home) || isGremio(m.away));
 
@@ -273,6 +280,8 @@ export function buildSeasonFromMatches(
 
   const seasonComplete = roundEntries.length >= 38;
 
+  mergePreviousRatingsIntoRounds(roundEntries, options?.previousSeason?.rounds);
+
   const data: SeasonData = {
     year,
     team: "Grêmio",
@@ -292,7 +301,7 @@ export function buildSeasonFromMatches(
     },
   };
 
-  return seasonDataSchema.parse(data);
+  return finalizeSeasonWithRatings(data);
 }
 
 export const OPENFOOTBALL_SERIE_A_BASE =

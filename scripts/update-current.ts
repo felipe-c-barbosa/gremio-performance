@@ -9,6 +9,8 @@ import {
   fetchSerieAText,
   OPENFOOTBALL_SERIE_A_BASE,
 } from "./lib/openfootballBrazil";
+import { fillMissingRatingsForSeason } from "./lib/fillRatings";
+import { finalizeSeasonWithRatings } from "./lib/ratingsMerge";
 import type { RoundEntry, SeasonData } from "../src/lib/types";
 import { seasonDataSchema } from "../src/lib/types";
 
@@ -79,6 +81,7 @@ async function buildFromGloboMerge(
       pointsGained = 0;
     }
 
+    const kept = byRound.get(round);
     const entry: RoundEntry = {
       round,
       date: m.date ?? new Date().toISOString().slice(0, 10),
@@ -91,6 +94,14 @@ async function buildFromGloboMerge(
       accumulatedPoints: 0,
       tablePosition: tablePos,
     };
+    if (
+      kept &&
+      typeof kept.rating === "number" &&
+      (kept.ratingSource === "sofascore" || kept.ratingSource === "fotmob")
+    ) {
+      entry.rating = kept.rating;
+      entry.ratingSource = kept.ratingSource;
+    }
     byRound.set(round, entry);
   }
 
@@ -113,28 +124,38 @@ async function buildFromGloboMerge(
   const pointsPercentage =
     maxPts > 0 ? Math.round((points / maxPts) * 1000) / 10 : 0;
 
-  return seasonDataSchema.parse({
-    year: 2026,
-    team: "Grêmio",
-    updatedAt: new Date().toISOString(),
-    source: "ge.globo.com (campeonato-brasileiro-api merge)",
-    rounds,
-    summary: {
-      played,
-      wins,
-      draws,
-      losses,
-      goalsFor,
-      goalsAgainst,
-      points,
-      finalPosition: null,
-      pointsPercentage,
-    },
-  });
+  return finalizeSeasonWithRatings(
+    seasonDataSchema.parse({
+      year: 2026,
+      team: "Grêmio",
+      updatedAt: new Date().toISOString(),
+      source: "ge.globo.com (campeonato-brasileiro-api merge)",
+      rounds,
+      summary: {
+        played,
+        wins,
+        draws,
+        losses,
+        goalsFor,
+        goalsAgainst,
+        points,
+        finalPosition: null,
+        pointsPercentage,
+      },
+    })
+  );
+}
+
+async function persist2026(data: SeasonData, label: string) {
+  const filled = await fillMissingRatingsForSeason(data);
+  const out = finalizeSeasonWithRatings(filled);
+  writeSeasonJson(OUT, out);
+  console.log(`${label} -> ${OUT} (${out.rounds.length} rounds, ratings ${out.summary.ratingsCovered ?? 0}/${out.summary.played}).`);
 }
 
 async function main() {
   const updatedAt = new Date().toISOString();
+  const prev = loadExisting();
   try {
     const txt = await fetchSerieAText(2026);
     const matches = parseOpenFootballSerieA(txt, 2026);
@@ -142,9 +163,9 @@ async function main() {
       const data = buildSeasonFromMatches(2026, matches, {
         updatedAt,
         source: `${OPENFOOTBALL_SERIE_A_BASE}/2026_br1.txt`,
+        previousSeason: prev,
       });
-      writeSeasonJson(OUT, data);
-      console.log(`Wrote ${OUT} from OpenFootball (${data.rounds.length} rounds).`);
+      await persist2026(data, "OpenFootball");
       return;
     }
   } catch (e) {
@@ -152,9 +173,8 @@ async function main() {
   }
 
   try {
-    const data = await buildFromGloboMerge(loadExisting());
-    writeSeasonJson(OUT, data);
-    console.log(`Wrote ${OUT} from GE API merge (${data.rounds.length} rounds).`);
+    const data = await buildFromGloboMerge(prev);
+    await persist2026(data, "GE API merge");
     return;
   } catch (e) {
     console.warn("GE API merge failed:", (e as Error).message);
@@ -169,10 +189,9 @@ async function main() {
     if (!$("#scriptReact").length) {
       throw new Error("GE page missing #scriptReact");
     }
-    const data = await buildFromGloboMerge(loadExisting(), { html });
+    const data = await buildFromGloboMerge(prev, { html });
     data.source = "ge.globo.com (cheerio check + campeonato-brasileiro-api)";
-    writeSeasonJson(OUT, data);
-    console.log(`Wrote ${OUT} from GE fetch (${data.rounds.length} rounds).`);
+    await persist2026(data, "GE fetch");
   } catch (e) {
     console.error("All update strategies failed:", e);
     process.exit(1);

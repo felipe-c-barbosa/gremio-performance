@@ -48,6 +48,15 @@ function Card({
       <p className="mt-1 text-xs text-zinc-500">
         Posição: <span className="text-zinc-300">{pos}</span>
       </p>
+      {summary.averageRating != null && summary.ratingsCovered != null ? (
+        <p className="mt-1 text-xs text-zinc-500">
+          Nota média:{" "}
+          <span className="text-zinc-300">
+            {summary.averageRating.toFixed(2)} ({summary.ratingsCovered}/{summary.played}{" "}
+            jogos com dado)
+          </span>
+        </p>
+      ) : null}
     </article>
   );
 }

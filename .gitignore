@@ -20,6 +20,9 @@
 # production
 /build
 
+# local rating cache (optional; regenerate with npm run seed:ratings)
+/cache/
+
 # misc
 .DS_Store
 *.pem
