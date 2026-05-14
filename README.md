@@ -66,7 +66,16 @@ npm run build
 3. Configuração detectada via [`netlify.toml`](netlify.toml):
    - **Build command:** `npm run build`
    - **Publish directory:** `out`
-4. Variável opcional: nenhuma obrigatória.
+4. Variável recomendada em produção: **`NEXT_PUBLIC_SITE_URL`** — URL canónica (ex. `https://seu-dominio.netlify.app`, sem barra final). Usada em `robots.txt`, `sitemap.xml` e `metadataBase` (Open Graph). Sem ela, o build usa `http://localhost:3000` (ok para desenvolvimento).
+
+### SEO (`robots.txt` e `sitemap.xml`)
+
+O Next gera em `out/`:
+
+- **`robots.txt`** — `User-agent: *` + `Allow: /` + linha `Sitemap:` com URL absoluta (boas práticas Google).
+- **`sitemap.xml`** — lista a página inicial com `changefreq: weekly`, `priority: 1` e `lastmod` no build.
+
+Com `output: "export"`, os ficheiros [`src/app/robots.ts`](src/app/robots.ts) e [`src/app/sitemap.ts`](src/app/sitemap.ts) usam `export const dynamic = "force-static"`. A base vem de [`src/lib/site.ts`](src/lib/site.ts).
 
 Cada push na branch de produção (ex.: `main`) dispara um novo deploy.
 

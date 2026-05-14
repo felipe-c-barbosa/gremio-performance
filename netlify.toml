@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # URL canónica: sitemap.xml, robots.txt e metadataBase (Open Graph). Defina no painel Netlify se preferir.
+  # NEXT_PUBLIC_SITE_URL = "https://seu-site.netlify.app"
 
 [[headers]]
   for = "/_next/static/*"

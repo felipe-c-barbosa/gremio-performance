@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { getSiteUrl } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: "Grêmio no Brasileirão | Comparativo 2020–2026",
   description:
     "Dashboard comparando a campanha do Grêmio no Brasileirão 2026 com 2020, 2021, 2023, 2024 e 2025.",
