@@ -8,10 +8,16 @@ export function mergePreviousEloIntoRounds(
   if (!previous?.length) return;
   const map = new Map(previous.map((r) => [r.round, r]));
   for (const r of rounds) {
-    if (typeof r.elo === "number") continue;
     const p = map.get(r.round);
-    if (p && typeof p.elo === "number") {
+    if (typeof r.elo !== "number" && p && typeof p.elo === "number") {
       r.elo = p.elo;
+    }
+    if (
+      typeof r.leagueAveragePoints !== "number" &&
+      p &&
+      typeof p.leagueAveragePoints === "number"
+    ) {
+      r.leagueAveragePoints = p.leagueAveragePoints;
     }
   }
 }

@@ -255,6 +255,11 @@ export function buildSeasonFromMatches(
     const opponent = home ? gm.away : gm.home;
     const table = buildTableAfterMatchdays(allMatches, r);
     const tablePosition = positionOfGremio(table);
+    const others = table.filter((row) => !isGremio(row.name));
+    const leagueAveragePoints =
+      others.length > 0
+        ? Math.round((others.reduce((s, t) => s + t.p, 0) / others.length) * 100) / 100
+        : null;
 
     roundEntries.push({
       round: r,
@@ -267,6 +272,7 @@ export function buildSeasonFromMatches(
       pointsGained,
       accumulatedPoints: accumulated,
       tablePosition,
+      leagueAveragePoints,
     });
   }
 

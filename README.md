@@ -10,7 +10,7 @@ Dashboard estático (Next.js + Recharts) que compara a campanha do **Grêmio** n
 | [campeonato-brasileiro-api](https://www.npmjs.com/package/campeonato-brasileiro-api) + Globo Esporte | Fallback no script `update-current` quando o TXT de 2026 ainda não reflete a última rodada. |
 | **Elo (cálculo local)** | Reprocessa todos os jogos da Série A desde **2018** (warm-up) com o método descrito em [Yuri Malheiros — Elo Brasileirão](https://www.yurimalheiros.com/elo-brasileirao/) (K=20, rating inicial 1000, sem mando). O Elo do Grêmio em **2022** não muda (não disputou a Série A); os outros times continuam a ser atualizados. |
 
-Os JSON em `data/` são versionados no Git. A posição na tabela por rodada é simulada a partir de **todos** os jogos do campeonato (não só do Grêmio).
+Os JSON em `data/` são versionados no Git. A posição na tabela por rodada é simulada a partir de **todos** os jogos do campeonato (não só do Grêmio). Cada rodada pode incluir `leagueAveragePoints`: média de pontos acumulados dos **outros 19 times** após essa rodada (usada no gráfico "Desempenho vs. média da Série A").
 
 ### Elo por rodada
 
@@ -24,7 +24,7 @@ Cada rodada em `data/{ano}.json` pode ter `elo` (número). No `summary`: `averag
 
   Anos opcionais: `SEED_ELO_YEARS=2023,2024` (vírgula). Um snapshot auxiliar é gravado em `cache/elo/seasons.json` (pasta `cache/` no `.gitignore`).
 
-- **2026** — cada execução de `npm run update:current` recalcula o mapa de Elo até 2026 e preenche as rodadas do JSON.
+- **2026** — cada execução de `npm run update:current` recalcula o mapa de Elo até 2026 e preenche as rodadas do JSON. Quando o fallback usa só a API da Globo (OpenFootball atrasado), `leagueAveragePoints` das rodadas novas pode ficar ausente até o TXT atualizar; valores anteriores são preservados no merge.
 
 O warm-up começa em **2018** (primeiro ano com `*_br1.txt` no repositório OpenFootball usado aqui), não em 2003 como na página do Yuri; por isso os valores finais podem diferir alguns pontos das tabelas dele, mas a metodologia é a mesma.
 

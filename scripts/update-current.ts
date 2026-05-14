@@ -98,6 +98,9 @@ async function buildFromGloboMerge(
     if (kept && typeof kept.elo === "number") {
       entry.elo = kept.elo;
     }
+    if (kept && typeof kept.leagueAveragePoints === "number") {
+      entry.leagueAveragePoints = kept.leagueAveragePoints;
+    }
     byRound.set(round, entry);
   }
 

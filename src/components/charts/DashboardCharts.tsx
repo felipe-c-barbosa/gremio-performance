@@ -7,11 +7,13 @@ import {
   buildAccumulatedRows,
   buildEloRows,
   buildPositionRows,
+  buildRelativeToMeanRows,
   COMPARISON_YEARS,
 } from "@/lib/data";
 import { AccumulatedPointsChart } from "./AccumulatedPointsChart";
 import { EloComparisonChart } from "./EloComparisonChart";
 import { PositionChart } from "./PositionChart";
+import { RelativeToMeanChart } from "./RelativeToMeanChart";
 import { RoundResultsChart } from "./RoundResultsChart";
 
 type Props = {
@@ -32,6 +34,7 @@ export function DashboardCharts({ seasons }: Props) {
 
   const acc = buildAccumulatedRows(seasons);
   const pos = buildPositionRows(seasons);
+  const relativeRows = useMemo(() => buildRelativeToMeanRows(seasons), [seasons]);
   const eloRows = useMemo(() => buildEloRows(seasons), [seasons]);
   const byYear = new Map(seasons.map((s) => [s.year, s]));
 
@@ -46,6 +49,24 @@ export function DashboardCharts({ seasons }: Props) {
           hiddenYears={hiddenYears}
           onLegendClick={toggleYear}
         />
+      </section>
+
+      <section className="rounded-2xl border border-white/10 bg-zinc-900/40 p-4 sm:p-6">
+        <h2 className="text-lg font-semibold text-white sm:text-xl">
+          Desempenho vs. média da Série A
+        </h2>
+        <p className="mt-1 text-sm text-zinc-500">
+          Pontos a mais (ou a menos) que a média dos outros 19 times até cada rodada
+          (simulação a partir de todos os jogos do OpenFootball).
+        </p>
+        <div className="mt-4">
+          <RelativeToMeanChart
+            seasons={seasons}
+            data={relativeRows}
+            hiddenYears={hiddenYears}
+            onLegendClick={toggleYear}
+          />
+        </div>
       </section>
 
       <section className="rounded-2xl border border-white/10 bg-zinc-900/40 p-4 sm:p-6">
@@ -100,16 +121,7 @@ export function DashboardCharts({ seasons }: Props) {
           openfootball/south-america
         </a>
         {" · "}
-        Atualização 2026: OpenFootball / Globo Esporte. Elo: cálculo local (método{" "}
-        <a
-          className="text-[#0E72BC] underline-offset-2 hover:underline"
-          href="https://www.yurimalheiros.com/elo-brasileirao/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Yuri Malheiros
-        </a>
-        , ver README).
+        Atualização 2026: OpenFootball / Globo Esporte. Elo e média da liga: ver README.
       </footer>
     </div>
   );

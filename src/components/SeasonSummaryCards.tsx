@@ -1,5 +1,14 @@
 import type { SeasonData } from "@/lib/types";
-import { COMPARISON_YEARS } from "@/lib/data";
+import { COMPARISON_YEARS, leagueContextAtRound } from "@/lib/data";
+
+function finalVsLeague(season: SeasonData) {
+  let last: ReturnType<typeof leagueContextAtRound> = null;
+  for (const r of season.rounds) {
+    const c = leagueContextAtRound(season, r.round);
+    if (c) last = c;
+  }
+  return last;
+}
 
 function Card({
   season,
@@ -13,6 +22,8 @@ function Card({
     summary.finalPosition != null
       ? `${summary.finalPosition}º`
       : "Em andamento";
+
+  const vsLeague = finalVsLeague(season);
 
   return (
     <article
@@ -56,6 +67,17 @@ function Card({
           <span className="text-zinc-300">
             {summary.finalElo.toFixed(2)} · médio {summary.averageElo.toFixed(2)} (
             {summary.eloCovered}/{summary.played} rodadas)
+          </span>
+        </p>
+      ) : null}
+      {vsLeague ? (
+        <p className="mt-1 text-xs text-zinc-500">
+          Vs. média da liga:{" "}
+          <span className="text-zinc-300">
+            {vsLeague.diffPts >= 0 ? "+" : ""}
+            {vsLeague.diffPts.toFixed(1)} pts (
+            {vsLeague.diffPct >= 0 ? "+" : ""}
+            {vsLeague.diffPct.toFixed(1)}%)
           </span>
         </p>
       ) : null}

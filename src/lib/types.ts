@@ -13,6 +13,8 @@ export const roundEntrySchema = z.object({
   tablePosition: z.number().int().positive(),
   /** Elo após a rodada (Brasileirão Série A, cálculo local). */
   elo: z.number().nullable().optional(),
+  /** Média de pontos dos outros 19 times após esta rodada (simulação OpenFootball). */
+  leagueAveragePoints: z.number().nullable().optional(),
 });
 
 export type RoundEntry = z.infer<typeof roundEntrySchema>;

@@ -130,3 +130,61 @@ export function eloAtRound(
   if (!e || typeof e.elo !== "number") return null;
   return e.elo;
 }
+
+export type RelativeToMeanRow = {
+  round: number;
+} & Partial<Record<`y${ComparisonYear}`, number | null>>;
+
+/** Pontos acumulados do Grêmio menos média dos outros 19 após cada rodada. */
+export function buildRelativeToMeanRows(
+  seasons: SeasonData[]
+): RelativeToMeanRow[] {
+  const byYear = new Map<number, SeasonData>();
+  for (const s of seasons) {
+    byYear.set(s.year, s);
+  }
+  const rows: RelativeToMeanRow[] = [];
+  for (let round = 1; round <= 38; round++) {
+    const row: RelativeToMeanRow = { round };
+    for (const y of COMPARISON_YEARS) {
+      const season = byYear.get(y);
+      const entry = season?.rounds.find((r) => r.round === round);
+      const key = `y${y}` as const;
+      if (
+        entry &&
+        typeof entry.leagueAveragePoints === "number" &&
+        entry.leagueAveragePoints > 0
+      ) {
+        row[key] = entry.accumulatedPoints - entry.leagueAveragePoints;
+      } else {
+        row[key] = null;
+      }
+    }
+    rows.push(row);
+  }
+  return rows;
+}
+
+export function leagueContextAtRound(
+  season: SeasonData | undefined,
+  round: number
+): {
+  gremio: number;
+  leagueAvg: number;
+  diffPts: number;
+  diffPct: number;
+} | null {
+  const e = season?.rounds.find((r) => r.round === round);
+  if (
+    !e ||
+    typeof e.leagueAveragePoints !== "number" ||
+    e.leagueAveragePoints <= 0
+  ) {
+    return null;
+  }
+  const gremio = e.accumulatedPoints;
+  const leagueAvg = e.leagueAveragePoints;
+  const diffPts = gremio - leagueAvg;
+  const diffPct = (diffPts / leagueAvg) * 100;
+  return { gremio, leagueAvg, diffPts, diffPct };
+}
