@@ -20,7 +20,7 @@
 # production
 /build
 
-# local rating cache (optional; regenerate with npm run seed:ratings)
+# local elo cache (optional; regenerate with npm run seed:elo)
 /cache/
 
 # misc

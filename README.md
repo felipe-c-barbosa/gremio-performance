@@ -8,34 +8,25 @@ Dashboard estático (Next.js + Recharts) que compara a campanha do **Grêmio** n
 |--------|-----|
 | [openfootball/south-america](https://github.com/openfootball/south-america/tree/master/brazil) (`YYYY_br1.txt`) | Temporadas históricas e **2026** quando o arquivo TXT está atualizado. |
 | [campeonato-brasileiro-api](https://www.npmjs.com/package/campeonato-brasileiro-api) + Globo Esporte | Fallback no script `update-current` quando o TXT de 2026 ainda não reflete a última rodada. |
-| **SofaScore** (`api.sofascore.com`) + **FotMob** (`www.fotmob.com/api`) | Notas por jogo (time) — **sem API pública oficial**; uso educacional, com rate-limit e cache local. |
+| **Elo (cálculo local)** | Reprocessa todos os jogos da Série A desde **2018** (warm-up) com o método descrito em [Yuri Malheiros — Elo Brasileirão](https://www.yurimalheiros.com/elo-brasileirao/) (K=20, rating inicial 1000, sem mando). O Elo do Grêmio em **2022** não muda (não disputou a Série A); os outros times continuam a ser atualizados. |
 
 Os JSON em `data/` são versionados no Git. A posição na tabela por rodada é simulada a partir de **todos** os jogos do campeonato (não só do Grêmio).
 
-### Notas por rodada (SofaScore / FotMob)
+### Elo por rodada
 
-Cada entrada em `data/{ano}.json` pode ter `rating` (0–10), `ratingSource` (`sofascore` \| `fotmob`) e, no `summary`, `averageRating` e `ratingsCovered`.
+Cada rodada em `data/{ano}.json` pode ter `elo` (número). No `summary`: `averageElo`, `eloCovered`, `finalElo`.
 
-- **Histórico (2020, 2021, 2023, 2024, 2025)** — rode localmente (muitos IPs de datacenter recebem 403 do Cloudflare):
-
-  ```bash
-  npm run seed:ratings
-  ```
-
-  Anos opcionais: `SEED_RATINGS_YEARS=2023,2024` (vírgula, sem espaços obrigatórios). Para testar poucas rodadas: `SEED_RATINGS_MAX_ROUNDS=3`.
-
-  Um snapshot por ano é gravado em `cache/ratings/{ano}.json` (pasta `cache/` está no `.gitignore`).
-
-- **2026** — o mesmo `npm run update:current` tenta preencher notas faltantes de forma idempotente (não sobrescreve rating já salva). Se a API falhar, o job **não** quebra: só faltam pontos no gráfico.
-
-- **Desligar busca de notas** (só pontos / posição), por exemplo no GitHub Actions:
+- **Histórico (2020, 2021, 2023, 2024, 2025)** — após alterar jogos no OpenFootball ou regenerar com `seed:historical`, rode:
 
   ```bash
-  set SOFASCORE_RATINGS_DISABLED=1   # Windows CMD
-  # ou: $env:SOFASCORE_RATINGS_DISABLED="1"   # PowerShell
+  npm run seed:elo
   ```
 
-**Termos / responsabilidade:** SofaScore e FotMob não oferecem API estável para terceiros. Não revenda nem abuse do tráfego; respeite os termos dos sites. Uso comercial exige acordo próprio (ex.: produtos oficiais / licenciamento).
+  Anos opcionais: `SEED_ELO_YEARS=2023,2024` (vírgula). Um snapshot auxiliar é gravado em `cache/elo/seasons.json` (pasta `cache/` no `.gitignore`).
+
+- **2026** — cada execução de `npm run update:current` recalcula o mapa de Elo até 2026 e preenche as rodadas do JSON.
+
+O warm-up começa em **2018** (primeiro ano com `*_br1.txt` no repositório OpenFootball usado aqui), não em 2003 como na página do Yuri; por isso os valores finais podem diferir alguns pontos das tabelas dele, mas a metodologia é a mesma.
 
 ## Desenvolvimento local
 
@@ -44,7 +35,7 @@ npm install
 npm run dev
 ```
 
-Gerar de novo os JSONs históricos (2020, 2021, 2023, 2024, 2025):
+Gerar de novo os JSONs históricos (2020, 2021, 2023, 2024, 2025) **com Elo**:
 
 ```bash
 npm run seed:historical
@@ -56,10 +47,10 @@ Atualizar só `data/2026.json` (rede necessária):
 npm run update:current
 ```
 
-Popular notas nas temporadas históricas já commitadas (rede + paciência; ver tabela acima):
+Só recalcular Elo nos JSONs já existentes (sem refetch do OpenFootball):
 
 ```bash
-npm run seed:ratings
+npm run seed:elo
 ```
 
 Build de produção (gera `out/` para export estático):
@@ -91,4 +82,4 @@ O workflow [`.github/workflows/update-data.yml`](.github/workflows/update-data.y
 
 ## Licença dos dados
 
-Datasets OpenFootball: [CC0](https://github.com/openfootball/south-america/blob/master/LICENSE.md). Respeite os termos de uso do site da Globo ao usar o fallback de scraping.
+Datasets OpenFootball: [CC0](https://github.com/openfootball/south-america/blob/master/LICENSE.md). Respeite os termos de uso do site da Globo ao usar o fallback de scraping. O método Elo explicado em [yurimalheiros.com](https://www.yurimalheiros.com/elo-brasileirao/) é referência metodológica; a implementação e os números gerados neste repositório são responsabilidade do projeto.

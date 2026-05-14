@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   CartesianGrid,
   Line,
@@ -11,15 +12,15 @@ import {
   YAxis,
 } from "recharts";
 import type { SeasonData } from "@/lib/types";
-import type { ComparisonYear, CumulativeRatingRow } from "@/lib/data";
+import type { ComparisonYear, EloRow } from "@/lib/data";
 import {
   COMPARISON_YEARS,
-  gameRatingAtRound,
-  REFERENCE_TEAM_RATING,
+  ELO_BASELINE,
+  eloAtRound,
   YEAR_LINE_COLORS,
 } from "@/lib/data";
 
-function RatingTooltip({
+function EloTooltip({
   active,
   label,
   seasons,
@@ -36,38 +37,57 @@ function RatingTooltip({
       <ul className="space-y-1">
         {COMPARISON_YEARS.map((y) => {
           const season = byYear.get(y);
-          const g = gameRatingAtRound(season, label);
-          if (!g) return null;
+          const elo = eloAtRound(season, label);
+          if (elo == null) return null;
           return (
             <li key={y} className="flex justify-between gap-4 tabular-nums">
               <span style={{ color: YEAR_LINE_COLORS[y] }}>{y}</span>
-              <span className="text-zinc-200">
-                jogo {g.rating.toFixed(2)} ({g.source})
-              </span>
+              <span className="text-zinc-200">Elo {elo.toFixed(2)}</span>
             </li>
           );
         })}
       </ul>
       <p className="mt-2 border-t border-white/10 pt-2 text-[10px] text-zinc-500">
-        Linha: média das notas até esta rodada (só jogos com dado).
+        Elo calculado localmente (K=20, inicial 1000). Ver README.
       </p>
     </div>
   );
 }
 
+function yDomainFromRows(rows: EloRow[]): [number, number] {
+  let min = Infinity;
+  let max = -Infinity;
+  for (const row of rows) {
+    for (const y of COMPARISON_YEARS) {
+      const v = row[`y${y}` as const];
+      if (typeof v === "number") {
+        min = Math.min(min, v);
+        max = Math.max(max, v);
+      }
+    }
+  }
+  if (!Number.isFinite(min) || !Number.isFinite(max)) {
+    return [900, 1300];
+  }
+  const pad = 25;
+  return [Math.floor(min - pad), Math.ceil(max + pad)];
+}
+
 type Props = {
   seasons: SeasonData[];
-  data: CumulativeRatingRow[];
+  data: EloRow[];
   hiddenYears: Set<number>;
   onLegendClick: (year: ComparisonYear) => void;
 };
 
-export function RatingComparisonChart({
+export function EloComparisonChart({
   seasons,
   data,
   hiddenYears,
   onLegendClick,
 }: Props) {
+  const domain = useMemo(() => yDomainFromRows(data), [data]);
+
   return (
     <div className="space-y-3">
       <div className="h-80 w-full min-w-0 sm:h-96">
@@ -80,23 +100,23 @@ export function RatingComparisonChart({
               tickCount={10}
             />
             <YAxis
-              domain={[5.2, 8.8]}
+              domain={domain}
               tick={{ fill: "#a1a1aa", fontSize: 11 }}
               label={{
-                value: "Nota (média acumulada)",
+                value: "Elo",
                 angle: -90,
                 position: "insideLeft",
                 fill: "#71717a",
                 fontSize: 11,
               }}
             />
-            <Tooltip content={<RatingTooltip seasons={seasons} />} />
+            <Tooltip content={<EloTooltip seasons={seasons} />} />
             <ReferenceLine
-              y={REFERENCE_TEAM_RATING}
+              y={ELO_BASELINE}
               stroke="#52525b"
               strokeDasharray="6 4"
               label={{
-                value: "~6.8 referência",
+                value: `${ELO_BASELINE} inicial`,
                 fill: "#71717a",
                 fontSize: 10,
                 position: "insideTopRight",
@@ -144,11 +164,16 @@ export function RatingComparisonChart({
         })}
       </div>
       <p className="text-xs text-zinc-500">
-        SofaScore (média dos titulares na escala do app) ou FotMob (nota agregada do
-        time), quando disponíveis. Alguns IPs (ex.: runners na nuvem) podem ser
-        bloqueados — rode{" "}
-        <code className="rounded bg-zinc-800 px-1">npm run seed:ratings</code> no seu
-        PC para histórico completo.
+        Método descrito em{" "}
+        <a
+          className="text-[#0E72BC] underline-offset-2 hover:underline"
+          href="https://www.yurimalheiros.com/elo-brasileirao/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          yurimalheiros.com/elo-brasileirao
+        </a>{" "}
+        (K=20, inicial 1000, sem mando). Warm-up a partir de 2018 (OpenFootball).
       </p>
     </div>
   );

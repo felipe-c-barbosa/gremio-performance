@@ -9,8 +9,9 @@ import {
   fetchSerieAText,
   OPENFOOTBALL_SERIE_A_BASE,
 } from "./lib/openfootballBrazil";
-import { fillMissingRatingsForSeason } from "./lib/fillRatings";
-import { finalizeSeasonWithRatings } from "./lib/ratingsMerge";
+import { buildGremioEloByRound } from "./lib/eloHistory";
+import { fillEloForSeason } from "./lib/fillElo";
+import { finalizeSeasonWithElo } from "./lib/eloMerge";
 import type { RoundEntry, SeasonData } from "../src/lib/types";
 import { seasonDataSchema } from "../src/lib/types";
 
@@ -94,13 +95,8 @@ async function buildFromGloboMerge(
       accumulatedPoints: 0,
       tablePosition: tablePos,
     };
-    if (
-      kept &&
-      typeof kept.rating === "number" &&
-      (kept.ratingSource === "sofascore" || kept.ratingSource === "fotmob")
-    ) {
-      entry.rating = kept.rating;
-      entry.ratingSource = kept.ratingSource;
+    if (kept && typeof kept.elo === "number") {
+      entry.elo = kept.elo;
     }
     byRound.set(round, entry);
   }
@@ -124,7 +120,7 @@ async function buildFromGloboMerge(
   const pointsPercentage =
     maxPts > 0 ? Math.round((points / maxPts) * 1000) / 10 : 0;
 
-  return finalizeSeasonWithRatings(
+  return finalizeSeasonWithElo(
     seasonDataSchema.parse({
       year: 2026,
       team: "Grêmio",
@@ -147,10 +143,13 @@ async function buildFromGloboMerge(
 }
 
 async function persist2026(data: SeasonData, label: string) {
-  const filled = await fillMissingRatingsForSeason(data);
-  const out = finalizeSeasonWithRatings(filled);
+  const eloMap = await buildGremioEloByRound(2026);
+  const filled = fillEloForSeason(data, eloMap);
+  const out = finalizeSeasonWithElo(filled);
   writeSeasonJson(OUT, out);
-  console.log(`${label} -> ${OUT} (${out.rounds.length} rounds, ratings ${out.summary.ratingsCovered ?? 0}/${out.summary.played}).`);
+  console.log(
+    `${label} -> ${OUT} (${out.rounds.length} rounds, elo ${out.summary.eloCovered ?? 0}/${out.summary.played}).`
+  );
 }
 
 async function main() {

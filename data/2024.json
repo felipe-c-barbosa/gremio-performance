@@ -14,7 +14,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 0,
-      "tablePosition": 17
+      "tablePosition": 17,
+      "elo": 1047.23
     },
     {
       "round": 2,
@@ -26,7 +27,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 3,
-      "tablePosition": 8
+      "tablePosition": 8,
+      "elo": 1056.72
     },
     {
       "round": 3,
@@ -38,7 +40,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 6,
-      "tablePosition": 5
+      "tablePosition": 5,
+      "elo": 1064.86
     },
     {
       "round": 4,
@@ -50,7 +53,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 6,
-      "tablePosition": 11
+      "tablePosition": 11,
+      "elo": 1052.3
     },
     {
       "round": 5,
@@ -62,7 +66,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 6,
-      "tablePosition": 14
+      "tablePosition": 14,
+      "elo": 1013.1
     },
     {
       "round": 6,
@@ -74,7 +79,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 6,
-      "tablePosition": 14
+      "tablePosition": 14,
+      "elo": 1018.31
     },
     {
       "round": 7,
@@ -86,7 +92,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 6,
-      "tablePosition": 14
+      "tablePosition": 14,
+      "elo": 1041.87
     },
     {
       "round": 8,
@@ -98,7 +105,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 6,
-      "tablePosition": 15
+      "tablePosition": 15,
+      "elo": 1032.91
     },
     {
       "round": 9,
@@ -110,7 +118,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 6,
-      "tablePosition": 18
+      "tablePosition": 18,
+      "elo": 1023.23
     },
     {
       "round": 10,
@@ -122,7 +131,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 6,
-      "tablePosition": 19
+      "tablePosition": 19,
+      "elo": 1012.73
     },
     {
       "round": 11,
@@ -134,7 +144,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 6,
-      "tablePosition": 19
+      "tablePosition": 19,
+      "elo": 1003.49
     },
     {
       "round": 12,
@@ -146,7 +157,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 7,
-      "tablePosition": 19
+      "tablePosition": 19,
+      "elo": 1002.47
     },
     {
       "round": 13,
@@ -158,7 +170,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 10,
-      "tablePosition": 18
+      "tablePosition": 18,
+      "elo": 1010.88
     },
     {
       "round": 14,
@@ -170,7 +183,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 11,
-      "tablePosition": 18
+      "tablePosition": 18,
+      "elo": 1013.47
     },
     {
       "round": 15,
@@ -182,7 +196,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 11,
-      "tablePosition": 19
+      "tablePosition": 19,
+      "elo": 1002.93
     },
     {
       "round": 16,
@@ -194,7 +209,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 11,
-      "tablePosition": 19
+      "tablePosition": 19,
+      "elo": 993.17
     },
     {
       "round": 17,
@@ -206,7 +222,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 11,
-      "tablePosition": 20
+      "tablePosition": 20,
+      "elo": 984.85
     },
     {
       "round": 18,
@@ -218,7 +235,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 14,
-      "tablePosition": 19
+      "tablePosition": 19,
+      "elo": 994.11
     },
     {
       "round": 19,
@@ -230,7 +248,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 15,
-      "tablePosition": 18
+      "tablePosition": 18,
+      "elo": 993.95
     },
     {
       "round": 20,
@@ -242,7 +261,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 18,
-      "tablePosition": 18
+      "tablePosition": 18,
+      "elo": 1003.9
     },
     {
       "round": 21,
@@ -254,7 +274,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 21,
-      "tablePosition": 16
+      "tablePosition": 16,
+      "elo": 1014.65
     },
     {
       "round": 22,
@@ -266,7 +287,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 24,
-      "tablePosition": 15
+      "tablePosition": 15,
+      "elo": 1023.17
     },
     {
       "round": 23,
@@ -278,7 +300,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 24,
-      "tablePosition": 15
+      "tablePosition": 15,
+      "elo": 1012.69
     },
     {
       "round": 24,
@@ -290,7 +313,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 27,
-      "tablePosition": 15
+      "tablePosition": 15,
+      "elo": 1022.16
     },
     {
       "round": 25,
@@ -302,7 +326,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 27,
-      "tablePosition": 16
+      "tablePosition": 16,
+      "elo": 1012.83
     },
     {
       "round": 26,
@@ -314,7 +339,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 28,
-      "tablePosition": 16
+      "tablePosition": 16,
+      "elo": 1012.57
     },
     {
       "round": 27,
@@ -326,7 +352,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 31,
-      "tablePosition": 15
+      "tablePosition": 15,
+      "elo": 1024.44
     },
     {
       "round": 28,
@@ -338,7 +365,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 32,
-      "tablePosition": 14
+      "tablePosition": 14,
+      "elo": 1015.76
     },
     {
       "round": 29,
@@ -350,7 +378,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 35,
-      "tablePosition": 11
+      "tablePosition": 11,
+      "elo": 1027.91
     },
     {
       "round": 30,
@@ -362,7 +391,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 35,
-      "tablePosition": 13
+      "tablePosition": 13,
+      "elo": 1009.65
     },
     {
       "round": 31,
@@ -374,7 +404,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 38,
-      "tablePosition": 11
+      "tablePosition": 11,
+      "elo": 1017.19
     },
     {
       "round": 32,
@@ -386,7 +417,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 39,
-      "tablePosition": 11
+      "tablePosition": 11,
+      "elo": 1016.48
     },
     {
       "round": 33,
@@ -398,7 +430,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 39,
-      "tablePosition": 12
+      "tablePosition": 12,
+      "elo": 1009.22
     },
     {
       "round": 34,
@@ -410,7 +443,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 40,
-      "tablePosition": 13
+      "tablePosition": 13,
+      "elo": 1008.15
     },
     {
       "round": 35,
@@ -422,7 +456,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 41,
-      "tablePosition": 13
+      "tablePosition": 13,
+      "elo": 1007.61
     },
     {
       "round": 36,
@@ -434,7 +469,8 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 44,
-      "tablePosition": 11
+      "tablePosition": 11,
+      "elo": 1019.29
     },
     {
       "round": 37,
@@ -446,7 +482,8 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 45,
-      "tablePosition": 12
+      "tablePosition": 12,
+      "elo": 1019.01
     },
     {
       "round": 38,
@@ -458,7 +495,8 @@
       "result": "L",
       "pointsGained": 0,
       "accumulatedPoints": 45,
-      "tablePosition": 14
+      "tablePosition": 14,
+      "elo": 1010.16
     }
   ],
   "summary": {
@@ -470,6 +508,9 @@
     "goalsAgainst": 50,
     "points": 45,
     "finalPosition": 14,
-    "pointsPercentage": 39.5
+    "pointsPercentage": 39.5,
+    "averageElo": 1017.09,
+    "eloCovered": 38,
+    "finalElo": 1010.16
   }
 }

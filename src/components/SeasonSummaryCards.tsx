@@ -48,12 +48,14 @@ function Card({
       <p className="mt-1 text-xs text-zinc-500">
         Posição: <span className="text-zinc-300">{pos}</span>
       </p>
-      {summary.averageRating != null && summary.ratingsCovered != null ? (
+      {summary.finalElo != null &&
+      summary.averageElo != null &&
+      summary.eloCovered != null ? (
         <p className="mt-1 text-xs text-zinc-500">
-          Nota média:{" "}
+          Elo final:{" "}
           <span className="text-zinc-300">
-            {summary.averageRating.toFixed(2)} ({summary.ratingsCovered}/{summary.played}{" "}
-            jogos com dado)
+            {summary.finalElo.toFixed(2)} · médio {summary.averageElo.toFixed(2)} (
+            {summary.eloCovered}/{summary.played} rodadas)
           </span>
         </p>
       ) : null}

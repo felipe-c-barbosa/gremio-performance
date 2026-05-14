@@ -5,13 +5,13 @@ import type { SeasonData } from "@/lib/types";
 import type { ComparisonYear } from "@/lib/data";
 import {
   buildAccumulatedRows,
+  buildEloRows,
   buildPositionRows,
-  buildRatingRows,
   COMPARISON_YEARS,
 } from "@/lib/data";
 import { AccumulatedPointsChart } from "./AccumulatedPointsChart";
+import { EloComparisonChart } from "./EloComparisonChart";
 import { PositionChart } from "./PositionChart";
-import { RatingComparisonChart } from "./RatingComparisonChart";
 import { RoundResultsChart } from "./RoundResultsChart";
 
 type Props = {
@@ -32,7 +32,7 @@ export function DashboardCharts({ seasons }: Props) {
 
   const acc = buildAccumulatedRows(seasons);
   const pos = buildPositionRows(seasons);
-  const ratingRows = useMemo(() => buildRatingRows(seasons), [seasons]);
+  const eloRows = useMemo(() => buildEloRows(seasons), [seasons]);
   const byYear = new Map(seasons.map((s) => [s.year, s]));
 
   return (
@@ -50,16 +50,16 @@ export function DashboardCharts({ seasons }: Props) {
 
       <section className="rounded-2xl border border-white/10 bg-zinc-900/40 p-4 sm:p-6">
         <h2 className="text-lg font-semibold text-white sm:text-xl">
-          Notas (SofaScore / FotMob) — média acumulada por rodada
+          Elo do clube por rodada
         </h2>
         <p className="mt-1 text-sm text-zinc-500">
-          Comparativo da performance medida pelos apps; tooltip mostra a nota do jogo
-          na rodada.
+          Elo calculado localmente a partir dos jogos do Brasileirão (OpenFootball);
+          tooltip mostra o valor após cada rodada.
         </p>
         <div className="mt-4">
-          <RatingComparisonChart
+          <EloComparisonChart
             seasons={seasons}
-            data={ratingRows}
+            data={eloRows}
             hiddenYears={hiddenYears}
             onLegendClick={toggleYear}
           />
@@ -100,10 +100,16 @@ export function DashboardCharts({ seasons }: Props) {
           openfootball/south-america
         </a>
         {" · "}
-        Atualização 2026: OpenFootball / Globo Esporte. Notas: API não oficial SofaScore
-        e FotMob — uso responsável; desligue com{" "}
-        <code className="rounded bg-zinc-800 px-1">SOFASCORE_RATINGS_DISABLED=1</code> no
-        workflow se preferir só pontos.
+        Atualização 2026: OpenFootball / Globo Esporte. Elo: cálculo local (método{" "}
+        <a
+          className="text-[#0E72BC] underline-offset-2 hover:underline"
+          href="https://www.yurimalheiros.com/elo-brasileirao/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Yuri Malheiros
+        </a>
+        , ver README).
       </footer>
     </div>
   );

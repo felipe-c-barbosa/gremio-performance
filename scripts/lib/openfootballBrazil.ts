@@ -7,9 +7,9 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import type { RoundEntry, SeasonData } from "../../src/lib/types";
 import {
-  finalizeSeasonWithRatings,
-  mergePreviousRatingsIntoRounds,
-} from "./ratingsMerge";
+  finalizeSeasonWithElo,
+  mergePreviousEloIntoRounds,
+} from "./eloMerge";
 
 const GREMIO_MARKERS = ["gremio", "grêmio"];
 
@@ -30,7 +30,7 @@ function normalizeTeamName(s: string): string {
     .toLowerCase();
 }
 
-function isGremio(name: string): boolean {
+export function isGremio(name: string): boolean {
   const n = normalizeTeamName(name);
   return GREMIO_MARKERS.some((m) => n.includes(m));
 }
@@ -280,7 +280,7 @@ export function buildSeasonFromMatches(
 
   const seasonComplete = roundEntries.length >= 38;
 
-  mergePreviousRatingsIntoRounds(roundEntries, options?.previousSeason?.rounds);
+  mergePreviousEloIntoRounds(roundEntries, options?.previousSeason?.rounds);
 
   const data: SeasonData = {
     year,
@@ -301,7 +301,7 @@ export function buildSeasonFromMatches(
     },
   };
 
-  return finalizeSeasonWithRatings(data);
+  return finalizeSeasonWithElo(data);
 }
 
 export const OPENFOOTBALL_SERIE_A_BASE =

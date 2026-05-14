@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "seed:historical": "tsx scripts/seed-historical.ts",
-    "seed:ratings": "tsx scripts/seed-ratings.ts",
+    "seed:elo": "tsx scripts/seed-elo.ts",
     "update:current": "tsx scripts/update-current.ts"
   },
   "dependencies": {
