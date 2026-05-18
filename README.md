@@ -81,7 +81,7 @@ Cada push na branch de produção (ex.: `main`) dispara um novo deploy.
 
 ## Atualização automática da temporada 2026
 
-O workflow [`.github/workflows/update-data.yml`](.github/workflows/update-data.yml) roda **3x por semana** (cron) e em **workflow_dispatch** manual:
+O workflow [`.github/workflows/update-data.yml`](.github/workflows/update-data.yml) roda **terça e sexta às 10:00 (BRT)** (cron) e em **workflow_dispatch** manual:
 
 1. Executa `npm run update:current`.
 2. Se `data/2026.json` mudar, faz commit e push.

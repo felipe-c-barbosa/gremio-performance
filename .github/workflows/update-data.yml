@@ -2,8 +2,8 @@ name: Update 2026 data
 
 on:
   schedule:
-    # Segunda, quinta e domingo 03:00 UTC (~ meia-noite BRT)
-    - cron: "0 3 * * 1,4,0"
+    # Terça e sexta 13:00 UTC (10:00 BRT) — após o auto-update matinal do OpenFootball
+    - cron: "0 13 * * 2,5"
   workflow_dispatch:
 
 permissions:
