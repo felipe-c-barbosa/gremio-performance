@@ -1,8 +1,8 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-05-22T15:47:54.992Z",
-  "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt",
+  "updatedAt": "2026-05-26T16:42:24.213Z",
+  "source": "ge.globo.com (campeonato-brasileiro-api merge)",
   "rounds": [
     {
       "round": 1,
