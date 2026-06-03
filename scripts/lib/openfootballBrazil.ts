@@ -35,14 +35,17 @@ export function isGremio(name: string): boolean {
   return GREMIO_MARKERS.some((m) => n.includes(m));
 }
 
-/** Parse "Sat Aug/8 2020" or "Sun Aug/9" (inherits year from context) */
+/** Matchday header: legacy `» Matchday 1` or newer `▪ Matchday 1`. */
+const MATCHDAY_LINE_RE = /^\s*(?:»|▪)\s*Matchday\s+(\d+)\s*$/i;
+
+/** Parse "Sat Aug/8 2020", "Sun Aug/9", or "Wed Jan 28 2026". */
 function parseDateLine(
   line: string,
   defaultYear: number
 ): { year: number; month: number; day: number } | null {
   const trimmed = line.trim();
   const m = trimmed.match(
-    /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(\w+)\/(\d{1,2})(?:\s+(\d{4}))?$/i
+    /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(\w+)(?:\/|\s+)(\d{1,2})(?:\s+(\d{4}))?$/i
   );
   if (!m) return null;
   const monthStr = m[1].toLowerCase();
@@ -75,11 +78,11 @@ function toIso(y: number, m: number, d: number): string {
 }
 
 /**
- * Match line: optional HH.MM prefix, Home v Away score
+ * Match line: optional HH.MM or HH:MM prefix, Home v Away score
  * score: "1-0" or "1-0 (1-0)" half-time in parens ignored
  */
 const MATCH_RE =
-  /^\s*(?:(\d{1,2})\.(\d{2})\s+)?(.+?)\s+v\s+(.+?)\s+(\d+)\s*-\s*(\d+)(?:\s*\([^)]*\))?\s*$/i;
+  /^\s*(?:(\d{1,2})[.:](\d{2})\s+)?(.+?)\s+v\s+(.+?)\s+(\d+)\s*-\s*(\d+)(?:\s*\([^)]*\))?\s*$/i;
 
 export function parseOpenFootballSerieA(txt: string, seasonYear: number): ParsedMatch[] {
   const lines = txt.split(/\r?\n/);
@@ -89,7 +92,7 @@ export function parseOpenFootballSerieA(txt: string, seasonYear: number): Parsed
 
   for (let li = 0; li < lines.length; li++) {
     const line = lines[li].trimEnd();
-    const md = line.match(/^\s*»\s*Matchday\s+(\d+)\s*$/i);
+    const md = line.match(MATCHDAY_LINE_RE);
     if (md) {
       currentMatchday = Number(md[1]);
       continue;
@@ -138,7 +141,7 @@ function findPreviousDateLine(
   for (let i = idx - 1; i >= 0; i--) {
     const d = parseDateLine(lines[i], defaultYear);
     if (d) return d;
-    if (/^\s*»\s*Matchday/i.test(lines[i])) break;
+    if (MATCHDAY_LINE_RE.test(lines[i])) break;
   }
   return null;
 }

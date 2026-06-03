@@ -170,6 +170,9 @@ async function main() {
       await persist2026(data, "OpenFootball");
       return;
     }
+    console.warn(
+      "OpenFootball 2026: TXT fetched but parsed 0 matches (check format changes)."
+    );
   } catch (e) {
     console.warn("OpenFootball 2026 unavailable:", (e as Error).message);
   }
