@@ -83,9 +83,11 @@ Cada push na branch de produção (ex.: `main`) dispara um novo deploy.
 
 O workflow [`.github/workflows/update-data.yml`](.github/workflows/update-data.yml) roda **terça e sexta às 10:00 (BRT)** (cron) e em **workflow_dispatch** manual:
 
-1. Executa `npm run update:current`.
-2. Se `data/2026.json` mudar, faz commit e push.
-3. O Netlify detecta o push e refaz o build.
+1. Executa `npm test` (parser OpenFootball).
+2. Executa `npm run update:current`.
+3. Executa `npm run healthcheck:2026` (falha se JSON estiver atrás da GE ou parser quebrado).
+4. Se `data/2026.json` mudar, faz commit e push.
+5. O Netlify detecta o push e refaz o build.
 
 > **Permissões:** em *Settings → Actions → General → Workflow permissions*, deixe **Read and write** para o `GITHUB_TOKEN` poder fazer push no mesmo repositório.
 

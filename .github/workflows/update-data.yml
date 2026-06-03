@@ -28,7 +28,11 @@ jobs:
 
       - run: npm ci
 
+      - run: npm test
+
       - run: npx tsx scripts/update-current.ts
+
+      - run: npx tsx scripts/healthcheck-2026.ts
 
       - name: Commit and push if changed
         run: |

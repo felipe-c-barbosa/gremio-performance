@@ -12,6 +12,7 @@ import {
 import { buildGremioEloByRound } from "./lib/eloHistory";
 import { fillEloForSeason } from "./lib/fillElo";
 import { finalizeSeasonWithElo } from "./lib/eloMerge";
+import { mergeGeRoundsIntoSeason } from "./lib/seasonMerge";
 import type { RoundEntry, SeasonData } from "../src/lib/types";
 import { seasonDataSchema } from "../src/lib/types";
 
@@ -145,6 +146,17 @@ async function buildFromGloboMerge(
   );
 }
 
+async function tryFetchGeSeason(
+  existing: SeasonData | null
+): Promise<SeasonData | null> {
+  try {
+    return await buildFromGloboMerge(existing);
+  } catch (e) {
+    console.warn("GE API preview failed:", (e as Error).message);
+    return null;
+  }
+}
+
 async function persist2026(data: SeasonData, label: string) {
   const eloMap = await buildGremioEloByRound(2026);
   const filled = fillEloForSeason(data, eloMap);
@@ -158,16 +170,23 @@ async function persist2026(data: SeasonData, label: string) {
 async function main() {
   const updatedAt = new Date().toISOString();
   const prev = loadExisting();
+  const gePreview = await tryFetchGeSeason(prev);
+
   try {
     const txt = await fetchSerieAText(2026);
     const matches = parseOpenFootballSerieA(txt, 2026);
     if (matches.length > 0) {
-      const data = buildSeasonFromMatches(2026, matches, {
+      let data = buildSeasonFromMatches(2026, matches, {
         updatedAt,
         source: `${OPENFOOTBALL_SERIE_A_BASE}/2026_br1.txt`,
         previousSeason: prev,
       });
-      await persist2026(data, "OpenFootball");
+      if (gePreview && gePreview.rounds.length > data.rounds.length) {
+        data = mergeGeRoundsIntoSeason(data, gePreview);
+        await persist2026(data, "OpenFootball + GE merge");
+      } else {
+        await persist2026(data, "OpenFootball");
+      }
       return;
     }
     console.warn(
@@ -178,7 +197,7 @@ async function main() {
   }
 
   try {
-    const data = await buildFromGloboMerge(prev);
+    const data = gePreview ?? (await buildFromGloboMerge(prev));
     await persist2026(data, "GE API merge");
     return;
   } catch (e) {

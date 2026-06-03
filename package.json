@@ -9,7 +9,9 @@
     "lint": "eslint",
     "seed:historical": "tsx scripts/seed-historical.ts",
     "seed:elo": "tsx scripts/seed-elo.ts",
-    "update:current": "tsx scripts/update-current.ts"
+    "update:current": "tsx scripts/update-current.ts",
+    "healthcheck:2026": "tsx scripts/healthcheck-2026.ts",
+    "test": "tsx --test scripts/lib/*.test.ts"
   },
   "dependencies": {
     "campeonato-brasileiro-api": "^2.0.1",
