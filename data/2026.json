@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-07-07T15:43:08.084Z",
+  "updatedAt": "2026-07-10T15:31:12.215Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt",
   "rounds": [
     {
@@ -240,21 +240,35 @@
       "accumulatedPoints": 21,
       "tablePosition": 13,
       "elo": 1015.38,
-      "leagueAveragePoints": 22.68
+      "leagueAveragePoints": 22.84
+    },
+    {
+      "round": 18,
+      "date": "2026-05-30",
+      "opponent": "SC Corinthians Paulista",
+      "homeAway": "H",
+      "scoreFor": 1,
+      "scoreAgainst": 3,
+      "result": "L",
+      "pointsGained": 0,
+      "accumulatedPoints": 21,
+      "tablePosition": 16,
+      "elo": 1005.49,
+      "leagueAveragePoints": 24.37
     }
   ],
   "summary": {
-    "played": 17,
+    "played": 18,
     "wins": 5,
     "draws": 6,
-    "losses": 6,
-    "goalsFor": 19,
-    "goalsAgainst": 20,
+    "losses": 7,
+    "goalsFor": 20,
+    "goalsAgainst": 23,
     "points": 21,
     "finalPosition": null,
-    "pointsPercentage": 41.2,
-    "averageElo": 1012.86,
-    "eloCovered": 17,
-    "finalElo": 1015.38
+    "pointsPercentage": 38.9,
+    "averageElo": 1012.45,
+    "eloCovered": 18,
+    "finalElo": 1005.49
   }
 }
