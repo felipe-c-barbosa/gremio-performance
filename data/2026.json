@@ -1,8 +1,8 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-07-17T14:43:03.485Z",
-  "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt",
+  "updatedAt": "2026-07-21T15:03:15.515Z",
+  "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (rodadas extras)",
   "rounds": [
     {
       "round": 1,
@@ -255,18 +255,30 @@
       "tablePosition": 16,
       "elo": 1005.49,
       "leagueAveragePoints": 24.37
+    },
+    {
+      "round": 19,
+      "date": "2026-07-17",
+      "opponent": "Mirassol",
+      "homeAway": "A",
+      "scoreFor": 1,
+      "scoreAgainst": 2,
+      "result": "L",
+      "pointsGained": 0,
+      "accumulatedPoints": 21,
+      "tablePosition": 16
     }
   ],
   "summary": {
-    "played": 18,
+    "played": 19,
     "wins": 5,
     "draws": 6,
-    "losses": 7,
-    "goalsFor": 20,
-    "goalsAgainst": 23,
+    "losses": 8,
+    "goalsFor": 21,
+    "goalsAgainst": 25,
     "points": 21,
     "finalPosition": null,
-    "pointsPercentage": 38.9,
+    "pointsPercentage": 36.8,
     "averageElo": 1012.45,
     "eloCovered": 18,
     "finalElo": 1005.49
