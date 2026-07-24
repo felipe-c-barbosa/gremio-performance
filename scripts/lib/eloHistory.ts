@@ -14,6 +14,14 @@ function round2(n: number): number {
   return Math.round(n * 100) / 100;
 }
 
+export type BuildEloOptions = {
+  /**
+   * Extra scored matches for `throughYear` (e.g. Globo Esporte rounds that
+   * OpenFootball has not scored yet). Deduped against OF by matchday+teams.
+   */
+  supplementalMatches?: ParsedMatch[];
+};
+
 /**
  * Reprocessa Série A (2018..throughYear) em ordem cronológica e devolve,
  * para cada rodada em que o Grêmio jogou na Série A, o Elo após o jogo.
@@ -21,7 +29,8 @@ function round2(n: number): number {
  * é atualizado nesses jogos (congelado implicitamente).
  */
 export async function buildGremioEloByRound(
-  throughYear: number
+  throughYear: number,
+  options?: BuildEloOptions
 ): Promise<Map<string, number>> {
   const matches: TaggedMatch[] = [];
   for (let y = WARMUP_START_YEAR; y <= throughYear; y++) {
@@ -30,6 +39,19 @@ export async function buildGremioEloByRound(
     for (const m of parsed) {
       matches.push({ ...m, seasonYear: y });
     }
+  }
+
+  const seen = new Set(
+    matches.map(
+      (m) =>
+        `${m.seasonYear}:${m.matchday}:${normalizeTeamKey(m.home)}:${normalizeTeamKey(m.away)}`
+    )
+  );
+  for (const m of options?.supplementalMatches ?? []) {
+    const key = `${throughYear}:${m.matchday}:${normalizeTeamKey(m.home)}:${normalizeTeamKey(m.away)}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    matches.push({ ...m, seasonYear: throughYear });
   }
 
   matches.sort((a, b) => {

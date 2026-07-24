@@ -8,11 +8,17 @@ import {
   buildSeasonFromMatches,
   fetchSerieAText,
   OPENFOOTBALL_SERIE_A_BASE,
+  type ParsedMatch,
 } from "./lib/openfootballBrazil";
 import { buildGremioEloByRound } from "./lib/eloHistory";
 import { fillEloForSeason } from "./lib/fillElo";
 import { finalizeSeasonWithElo } from "./lib/eloMerge";
 import { mergeGeRoundsIntoSeason } from "./lib/seasonMerge";
+import {
+  collectSupplementalEloMatches,
+  fillLeagueAverageFromGeTable,
+  openFootballScoredMatchdays,
+} from "./lib/geEnrichment";
 import type { RoundEntry, SeasonData } from "../src/lib/types";
 import { seasonDataSchema } from "../src/lib/types";
 
@@ -157,9 +163,71 @@ async function tryFetchGeSeason(
   }
 }
 
-async function persist2026(data: SeasonData, label: string) {
-  const eloMap = await buildGremioEloByRound(2026);
-  const filled = fillEloForSeason(data, eloMap);
+type GeCompetitionSnapshot = {
+  exposedRound: number;
+  matches: {
+    status: string;
+    scoreHome: number | null;
+    scoreAway: number | null;
+  }[];
+  tableEntries: { name: string; points: number }[];
+};
+
+async function fetchGeCompetitionSnapshot(): Promise<GeCompetitionSnapshot | null> {
+  try {
+    const comp = await api.getCompetition("a", {});
+    const exposedRound = comp.rounds?.[0]?.number ?? 0;
+    const matches = (comp.matches ?? []).map((m) => ({
+      status: m.status ?? "",
+      scoreHome: m.score?.home ?? null,
+      scoreAway: m.score?.away ?? null,
+    }));
+    const tableEntries = (comp.tables?.[0]?.entries ?? []).map((e) => ({
+      name: e.team?.name ?? "",
+      points: e.points ?? 0,
+    }));
+    return { exposedRound, matches, tableEntries };
+  } catch (e) {
+    console.warn("GE competition snapshot failed:", (e as Error).message);
+    return null;
+  }
+}
+
+function ofTeamNames(matches: ParsedMatch[]): string[] {
+  const names = new Set<string>();
+  for (const m of matches) {
+    names.add(m.home);
+    names.add(m.away);
+  }
+  return [...names];
+}
+
+async function persist2026(
+  data: SeasonData,
+  label: string,
+  options?: {
+    ofMatches?: ParsedMatch[];
+    geSnapshot?: GeCompetitionSnapshot | null;
+  }
+) {
+  let season = data;
+  const ofMatches = options?.ofMatches ?? [];
+  const ofNames = ofTeamNames(ofMatches);
+  const ofDays = openFootballScoredMatchdays(ofMatches);
+  const supplemental = collectSupplementalEloMatches(season, ofDays, ofNames);
+
+  if (options?.geSnapshot) {
+    season = fillLeagueAverageFromGeTable(season, {
+      tableEntries: options.geSnapshot.tableEntries,
+      exposedRound: options.geSnapshot.exposedRound,
+      exposedMatches: options.geSnapshot.matches,
+    });
+  }
+
+  const eloMap = await buildGremioEloByRound(2026, {
+    supplementalMatches: supplemental,
+  });
+  const filled = fillEloForSeason(season, eloMap);
   const out = finalizeSeasonWithElo(filled);
   writeSeasonJson(OUT, out);
   console.log(
@@ -171,6 +239,7 @@ async function main() {
   const updatedAt = new Date().toISOString();
   const prev = loadExisting();
   const gePreview = await tryFetchGeSeason(prev);
+  const geSnapshot = await fetchGeCompetitionSnapshot();
 
   try {
     const txt = await fetchSerieAText(2026);
@@ -183,9 +252,15 @@ async function main() {
       });
       if (gePreview && gePreview.rounds.length > data.rounds.length) {
         data = mergeGeRoundsIntoSeason(data, gePreview);
-        await persist2026(data, "OpenFootball + GE merge");
+        await persist2026(data, "OpenFootball + GE merge", {
+          ofMatches: matches,
+          geSnapshot,
+        });
       } else {
-        await persist2026(data, "OpenFootball");
+        await persist2026(data, "OpenFootball", {
+          ofMatches: matches,
+          geSnapshot,
+        });
       }
       return;
     }
@@ -198,7 +273,7 @@ async function main() {
 
   try {
     const data = gePreview ?? (await buildFromGloboMerge(prev));
-    await persist2026(data, "GE API merge");
+    await persist2026(data, "GE API merge", { geSnapshot });
     return;
   } catch (e) {
     console.warn("GE API merge failed:", (e as Error).message);
@@ -215,7 +290,7 @@ async function main() {
     }
     const data = await buildFromGloboMerge(prev, { html });
     data.source = "ge.globo.com (cheerio check + campeonato-brasileiro-api)";
-    await persist2026(data, "GE fetch");
+    await persist2026(data, "GE fetch", { geSnapshot });
   } catch (e) {
     console.error("All update strategies failed:", e);
     process.exit(1);

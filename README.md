@@ -24,7 +24,7 @@ Cada rodada em `data/{ano}.json` pode ter `elo` (número). No `summary`: `averag
 
   Anos opcionais: `SEED_ELO_YEARS=2023,2024` (vírgula). Um snapshot auxiliar é gravado em `cache/elo/seasons.json` (pasta `cache/` no `.gitignore`).
 
-- **2026** — cada execução de `npm run update:current` recalcula o mapa de Elo até 2026 e preenche as rodadas do JSON. Quando o fallback usa só a API da Globo (OpenFootball atrasado), `leagueAveragePoints` das rodadas novas pode ficar ausente até o TXT atualizar; valores anteriores são preservados no merge.
+- **2026** — cada execução de `npm run update:current` recalcula o mapa de Elo até 2026 e preenche as rodadas do JSON. Quando a Globo está à frente do OpenFootball, as rodadas extras recebem `elo` (continuando o motor a partir do TXT + jogo do Grêmio) e `leagueAveragePoints` a partir da classificação da GE, quando a tabela reflete o fim daquela rodada (rodada exposta ainda não iniciada ou já encerrada).
 
 O warm-up começa em **2018** (primeiro ano com `*_br1.txt` no repositório OpenFootball usado aqui), não em 2003 como na página do Yuri; por isso os valores finais podem diferir alguns pontos das tabelas dele, mas a metodologia é a mesma.
 
