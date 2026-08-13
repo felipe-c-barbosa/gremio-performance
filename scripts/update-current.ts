@@ -19,6 +19,10 @@ import {
   fillLeagueAverageFromGeTable,
   openFootballScoredMatchdays,
 } from "./lib/geEnrichment";
+import {
+  collectGeBackfillMatches,
+  mergeMatchesPreferExisting,
+} from "./lib/geRoundApi";
 import type { RoundEntry, SeasonData } from "../src/lib/types";
 import { seasonDataSchema } from "../src/lib/types";
 
@@ -165,6 +169,8 @@ async function tryFetchGeSeason(
 
 type GeCompetitionSnapshot = {
   exposedRound: number;
+  resourceId: string | null;
+  phaseSlug: string | null;
   matches: {
     status: string;
     scoreHome: number | null;
@@ -173,10 +179,24 @@ type GeCompetitionSnapshot = {
   tableEntries: { name: string; points: number }[];
 };
 
+function geSourceIds(comp: {
+  competition?: {
+    source?: { resourceId?: string | null; tUUID?: string | null };
+    phase?: { slug?: string | null };
+  };
+}): { resourceId: string | null; phaseSlug: string | null } {
+  const src = comp.competition?.source;
+  return {
+    resourceId: src?.resourceId ?? src?.tUUID ?? null,
+    phaseSlug: comp.competition?.phase?.slug ?? null,
+  };
+}
+
 async function fetchGeCompetitionSnapshot(): Promise<GeCompetitionSnapshot | null> {
   try {
     const comp = await api.getCompetition("a", {});
     const exposedRound = comp.rounds?.[0]?.number ?? 0;
+    const { resourceId, phaseSlug } = geSourceIds(comp);
     const matches = (comp.matches ?? []).map((m) => ({
       status: m.status ?? "",
       scoreHome: m.score?.home ?? null,
@@ -186,7 +206,7 @@ async function fetchGeCompetitionSnapshot(): Promise<GeCompetitionSnapshot | nul
       name: e.team?.name ?? "",
       points: e.points ?? 0,
     }));
-    return { exposedRound, matches, tableEntries };
+    return { exposedRound, resourceId, phaseSlug, matches, tableEntries };
   } catch (e) {
     console.warn("GE competition snapshot failed:", (e as Error).message);
     return null;
@@ -208,13 +228,17 @@ async function persist2026(
   options?: {
     ofMatches?: ParsedMatch[];
     geSnapshot?: GeCompetitionSnapshot | null;
+    supplementalMatches?: ParsedMatch[];
   }
 ) {
   let season = data;
   const ofMatches = options?.ofMatches ?? [];
   const ofNames = ofTeamNames(ofMatches);
   const ofDays = openFootballScoredMatchdays(ofMatches);
-  const supplemental = collectSupplementalEloMatches(season, ofDays, ofNames);
+  const supplemental = mergeMatchesPreferExisting(
+    options?.supplementalMatches ?? [],
+    collectSupplementalEloMatches(season, ofDays, ofNames)
+  );
 
   if (options?.geSnapshot) {
     season = fillLeagueAverageFromGeTable(season, {
@@ -235,6 +259,33 @@ async function persist2026(
   );
 }
 
+async function loadGeBackfill(
+  ofMatches: ParsedMatch[],
+  geSnapshot: GeCompetitionSnapshot | null
+): Promise<ParsedMatch[]> {
+  if (!geSnapshot?.resourceId || !geSnapshot.phaseSlug || geSnapshot.exposedRound < 1) {
+    return [];
+  }
+  try {
+    const extra = await collectGeBackfillMatches({
+      resourceId: geSnapshot.resourceId,
+      phaseSlug: geSnapshot.phaseSlug,
+      exposedRound: geSnapshot.exposedRound,
+      ofMatches,
+      ofNames: ofTeamNames(ofMatches),
+    });
+    if (extra.length) {
+      console.log(
+        `GE jogos API: ${extra.length} finished matches backfilled (through round ${geSnapshot.exposedRound}).`
+      );
+    }
+    return extra;
+  } catch (e) {
+    console.warn("GE jogos backfill failed:", (e as Error).message);
+    return [];
+  }
+}
+
 async function main() {
   const updatedAt = new Date().toISOString();
   const prev = loadExisting();
@@ -245,23 +296,28 @@ async function main() {
     const txt = await fetchSerieAText(2026);
     const matches = parseOpenFootballSerieA(txt, 2026);
     if (matches.length > 0) {
-      let data = buildSeasonFromMatches(2026, matches, {
+      const geBackfill = await loadGeBackfill(matches, geSnapshot);
+      const combined = mergeMatchesPreferExisting(matches, geBackfill);
+      let data = buildSeasonFromMatches(2026, combined, {
         updatedAt,
-        source: `${OPENFOOTBALL_SERIE_A_BASE}/2026_br1.txt`,
+        source:
+          geBackfill.length > 0
+            ? `${OPENFOOTBALL_SERIE_A_BASE}/2026_br1.txt + ge.globo.com (jogos API)`
+            : `${OPENFOOTBALL_SERIE_A_BASE}/2026_br1.txt`,
         previousSeason: prev,
       });
-      if (gePreview && gePreview.rounds.length > data.rounds.length) {
+      if (gePreview) {
         data = mergeGeRoundsIntoSeason(data, gePreview);
-        await persist2026(data, "OpenFootball + GE merge", {
-          ofMatches: matches,
-          geSnapshot,
-        });
-      } else {
-        await persist2026(data, "OpenFootball", {
-          ofMatches: matches,
-          geSnapshot,
-        });
       }
+      await persist2026(
+        data,
+        geBackfill.length > 0 ? "OpenFootball + GE jogos" : "OpenFootball",
+        {
+          ofMatches: matches,
+          geSnapshot,
+          supplementalMatches: geBackfill,
+        }
+      );
       return;
     }
     console.warn(
@@ -269,6 +325,24 @@ async function main() {
     );
   } catch (e) {
     console.warn("OpenFootball 2026 unavailable:", (e as Error).message);
+  }
+
+  try {
+    const geBackfill = await loadGeBackfill([], geSnapshot);
+    if (geBackfill.length > 0) {
+      const data = buildSeasonFromMatches(2026, geBackfill, {
+        updatedAt,
+        source: "ge.globo.com (jogos API)",
+        previousSeason: prev,
+      });
+      await persist2026(data, "GE jogos API", {
+        geSnapshot,
+        supplementalMatches: geBackfill,
+      });
+      return;
+    }
+  } catch (e) {
+    console.warn("GE jogos API season failed:", (e as Error).message);
   }
 
   try {

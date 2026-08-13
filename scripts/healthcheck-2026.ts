@@ -5,19 +5,14 @@ import {
   fetchSerieAText,
   parseOpenFootballSerieA,
 } from "./lib/openfootballBrazil";
+import {
+  fetchGeRoundJogos,
+  geJogoHasFinishedGremio,
+} from "./lib/geRoundApi";
 import { seasonDataSchema } from "../src/lib/types";
 
 const ROOT = path.join(__dirname, "..");
 const DATA = path.join(ROOT, "data", "2026.json");
-
-function isGremioName(name: string | null | undefined): boolean {
-  if (!name) return false;
-  const n = name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-  return n.includes("gremio") || n.includes("grêmio");
-}
 
 function loadSeason() {
   if (!existsSync(DATA)) {
@@ -27,21 +22,34 @@ function loadSeason() {
   return seasonDataSchema.parse(JSON.parse(readFileSync(DATA, "utf8")));
 }
 
-async function countGeGremioFinishedRounds(): Promise<number> {
+async function missingFinishedGremioRounds(
+  haveRounds: Set<number>
+): Promise<number[]> {
   const comp = await api.getCompetition("a", {});
-  const rounds = new Set<number>();
-  for (const m of comp.matches ?? []) {
-    if (m.status !== "finished") continue;
-    if (!m.score || m.score.home == null || m.score.away == null) continue;
-    const round = m.round ?? 0;
-    if (!round) continue;
-    const home = m.homeTeam?.name ?? "";
-    const away = m.awayTeam?.name ?? "";
-    if (isGremioName(home) || isGremioName(away)) {
-      rounds.add(round);
-    }
+  const exposedRound = comp.rounds?.[0]?.number ?? 0;
+  const src = comp.competition?.source as
+    | { resourceId?: string | null; tUUID?: string | null }
+    | undefined;
+  const resourceId = src?.resourceId ?? src?.tUUID ?? null;
+  const phaseSlug = comp.competition?.phase?.slug ?? null;
+  if (!resourceId || !phaseSlug || exposedRound < 1) {
+    throw new Error("GE competition metadata missing resourceId/phase");
   }
-  return rounds.size;
+
+  const missing: number[] = [];
+  const checks: Promise<void>[] = [];
+  for (let round = 1; round <= exposedRound; round++) {
+    if (haveRounds.has(round)) continue;
+    checks.push(
+      fetchGeRoundJogos(resourceId, phaseSlug, round).then((jogos) => {
+        if (jogos.some(geJogoHasFinishedGremio)) {
+          missing.push(round);
+        }
+      })
+    );
+  }
+  await Promise.all(checks);
+  return missing.sort((a, b) => a - b);
 }
 
 async function main() {
@@ -67,10 +75,12 @@ async function main() {
   }
 
   try {
-    const geRounds = await countGeGremioFinishedRounds();
-    if (geRounds > jsonRounds) {
+    const missing = await missingFinishedGremioRounds(
+      new Set(season.rounds.map((r) => r.round))
+    );
+    if (missing.length > 0) {
       console.error(
-        `healthcheck: stale data — JSON has ${jsonRounds} Grêmio rounds but GE has ${geRounds} finished`
+        `healthcheck: stale data — JSON missing finished Grêmio rounds: ${missing.join(", ")}`
       );
       process.exit(1);
     }

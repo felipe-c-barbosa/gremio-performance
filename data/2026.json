@@ -1,8 +1,8 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-08-11T14:18:37.275Z",
-  "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (rodadas extras)",
+  "updatedAt": "2026-08-13T00:16:21.427Z",
+  "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
       "round": 1,
@@ -58,7 +58,7 @@
       "accumulatedPoints": 6,
       "tablePosition": 8,
       "elo": 1019.91,
-      "leagueAveragePoints": 4.89
+      "leagueAveragePoints": 5.16
     },
     {
       "round": 5,
@@ -72,7 +72,7 @@
       "accumulatedPoints": 7,
       "tablePosition": 9,
       "elo": 1019.09,
-      "leagueAveragePoints": 6.26
+      "leagueAveragePoints": 6.53
     },
     {
       "round": 6,
@@ -86,7 +86,7 @@
       "accumulatedPoints": 8,
       "tablePosition": 8,
       "elo": 1018.47,
-      "leagueAveragePoints": 7.63
+      "leagueAveragePoints": 7.89
     },
     {
       "round": 7,
@@ -100,7 +100,7 @@
       "accumulatedPoints": 11,
       "tablePosition": 8,
       "elo": 1028.53,
-      "leagueAveragePoints": 9
+      "leagueAveragePoints": 9.26
     },
     {
       "round": 8,
@@ -114,7 +114,7 @@
       "accumulatedPoints": 11,
       "tablePosition": 8,
       "elo": 1017.4,
-      "leagueAveragePoints": 10.47
+      "leagueAveragePoints": 10.74
     },
     {
       "round": 9,
@@ -128,7 +128,7 @@
       "accumulatedPoints": 11,
       "tablePosition": 10,
       "elo": 1011.46,
-      "leagueAveragePoints": 11.95
+      "leagueAveragePoints": 12.21
     },
     {
       "round": 10,
@@ -140,9 +140,9 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 12,
-      "tablePosition": 10,
+      "tablePosition": 11,
       "elo": 1010.34,
-      "leagueAveragePoints": 13.32
+      "leagueAveragePoints": 13.58
     },
     {
       "round": 11,
@@ -154,9 +154,9 @@
       "result": "D",
       "pointsGained": 1,
       "accumulatedPoints": 13,
-      "tablePosition": 11,
+      "tablePosition": 12,
       "elo": 1010.29,
-      "leagueAveragePoints": 14.63
+      "leagueAveragePoints": 14.89
     },
     {
       "round": 12,
@@ -170,7 +170,7 @@
       "accumulatedPoints": 13,
       "tablePosition": 13,
       "elo": 1001.43,
-      "leagueAveragePoints": 16.16
+      "leagueAveragePoints": 16.42
     },
     {
       "round": 13,
@@ -184,7 +184,7 @@
       "accumulatedPoints": 16,
       "tablePosition": 11,
       "elo": 1010.31,
-      "leagueAveragePoints": 17.47
+      "leagueAveragePoints": 17.74
     },
     {
       "round": 14,
@@ -198,7 +198,7 @@
       "accumulatedPoints": 17,
       "tablePosition": 13,
       "elo": 1009.92,
-      "leagueAveragePoints": 18.79
+      "leagueAveragePoints": 19.05
     },
     {
       "round": 15,
@@ -212,7 +212,7 @@
       "accumulatedPoints": 17,
       "tablePosition": 17,
       "elo": 1004.27,
-      "leagueAveragePoints": 20.11
+      "leagueAveragePoints": 20.37
     },
     {
       "round": 16,
@@ -226,7 +226,7 @@
       "accumulatedPoints": 18,
       "tablePosition": 15,
       "elo": 1005.43,
-      "leagueAveragePoints": 21.47
+      "leagueAveragePoints": 21.74
     },
     {
       "round": 17,
@@ -240,7 +240,7 @@
       "accumulatedPoints": 21,
       "tablePosition": 13,
       "elo": 1015.38,
-      "leagueAveragePoints": 22.84
+      "leagueAveragePoints": 23.11
     },
     {
       "round": 18,
@@ -254,12 +254,12 @@
       "accumulatedPoints": 21,
       "tablePosition": 16,
       "elo": 1005.49,
-      "leagueAveragePoints": 24.37
+      "leagueAveragePoints": 24.63
     },
     {
       "round": 19,
       "date": "2026-07-17",
-      "opponent": "Mirassol",
+      "opponent": "Mirassol FC",
       "homeAway": "A",
       "scoreFor": 1,
       "scoreAgainst": 2,
@@ -269,20 +269,48 @@
       "tablePosition": 16,
       "elo": 996.01,
       "leagueAveragePoints": 26.11
+    },
+    {
+      "round": 20,
+      "date": "2026-07-26",
+      "opponent": "Fluminense FC",
+      "homeAway": "H",
+      "scoreFor": 1,
+      "scoreAgainst": 1,
+      "result": "D",
+      "pointsGained": 1,
+      "accumulatedPoints": 22,
+      "tablePosition": 15,
+      "elo": 998.6,
+      "leagueAveragePoints": 27.32
+    },
+    {
+      "round": 22,
+      "date": "2026-08-08",
+      "opponent": "São Paulo FC",
+      "homeAway": "H",
+      "scoreFor": 2,
+      "scoreAgainst": 1,
+      "result": "W",
+      "pointsGained": 3,
+      "accumulatedPoints": 25,
+      "tablePosition": 14,
+      "elo": 1008.9,
+      "leagueAveragePoints": 29.32
     }
   ],
   "summary": {
-    "played": 19,
-    "wins": 5,
-    "draws": 6,
+    "played": 21,
+    "wins": 6,
+    "draws": 7,
     "losses": 8,
-    "goalsFor": 21,
-    "goalsAgainst": 25,
-    "points": 21,
+    "goalsFor": 24,
+    "goalsAgainst": 27,
+    "points": 25,
     "finalPosition": null,
-    "pointsPercentage": 36.8,
-    "averageElo": 1011.59,
-    "eloCovered": 19,
-    "finalElo": 996.01
+    "pointsPercentage": 39.7,
+    "averageElo": 1010.84,
+    "eloCovered": 21,
+    "finalElo": 1008.9
   }
 }

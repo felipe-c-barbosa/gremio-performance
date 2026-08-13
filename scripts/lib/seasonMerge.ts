@@ -34,15 +34,16 @@ export function mergeGeRoundsIntoSeason(
   primary: SeasonData,
   ge: SeasonData
 ): SeasonData {
-  if (ge.rounds.length <= primary.rounds.length) {
-    return primary;
-  }
-
   const byRound = new Map(primary.rounds.map((r) => [r.round, { ...r }]));
+  let added = false;
   for (const r of ge.rounds) {
     if (!byRound.has(r.round)) {
       byRound.set(r.round, { ...r });
+      added = true;
     }
+  }
+  if (!added) {
+    return primary;
   }
 
   const sortedRounds = [...byRound.values()].sort((a, b) => a.round - b.round);

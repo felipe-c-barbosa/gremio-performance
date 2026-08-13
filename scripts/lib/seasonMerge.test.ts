@@ -54,4 +54,16 @@ describe("mergeGeRoundsIntoSeason", () => {
     assert.equal(merged.summary.points, 7);
     assert.match(merged.source!, /ge\.globo\.com \(rodadas extras\)/);
   });
+
+  it("inserts a later GE round even when counts are equal (postponed hole)", () => {
+    const primary = season([round(1, 3), round(2, 1), round(3, 0)]);
+    const ge = season([round(1, 3), round(2, 1), round(4, 3)]);
+    const merged = mergeGeRoundsIntoSeason(primary, ge);
+    assert.deepEqual(
+      merged.rounds.map((r) => r.round),
+      [1, 2, 3, 4]
+    );
+    assert.equal(merged.summary.played, 4);
+    assert.equal(merged.summary.points, 7);
+  });
 });
