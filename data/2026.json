@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-08-14T14:14:47.267Z",
+  "updatedAt": "2026-08-18T13:40:05.010Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -297,20 +297,34 @@
       "tablePosition": 14,
       "elo": 1008.9,
       "leagueAveragePoints": 29.32
+    },
+    {
+      "round": 23,
+      "date": "2026-08-16",
+      "opponent": "CA Mineiro",
+      "homeAway": "A",
+      "scoreFor": 0,
+      "scoreAgainst": 3,
+      "result": "L",
+      "pointsGained": 0,
+      "accumulatedPoints": 25,
+      "tablePosition": 15,
+      "elo": 999.42,
+      "leagueAveragePoints": 30.68
     }
   ],
   "summary": {
-    "played": 21,
+    "played": 22,
     "wins": 6,
     "draws": 7,
-    "losses": 8,
+    "losses": 9,
     "goalsFor": 24,
-    "goalsAgainst": 27,
+    "goalsAgainst": 30,
     "points": 25,
     "finalPosition": null,
-    "pointsPercentage": 39.7,
-    "averageElo": 1010.84,
-    "eloCovered": 21,
-    "finalElo": 1008.9
+    "pointsPercentage": 37.9,
+    "averageElo": 1010.32,
+    "eloCovered": 22,
+    "finalElo": 999.42
   }
 }
