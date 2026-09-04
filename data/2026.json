@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-09-01T17:09:21.961Z",
+  "updatedAt": "2026-09-04T16:44:15.325Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -56,9 +56,9 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 6,
-      "tablePosition": 8,
+      "tablePosition": 9,
       "elo": 1019.91,
-      "leagueAveragePoints": 5.16
+      "leagueAveragePoints": 5.32
     },
     {
       "round": 5,
@@ -72,7 +72,7 @@
       "accumulatedPoints": 7,
       "tablePosition": 9,
       "elo": 1019.09,
-      "leagueAveragePoints": 6.53
+      "leagueAveragePoints": 6.68
     },
     {
       "round": 6,
@@ -86,7 +86,7 @@
       "accumulatedPoints": 8,
       "tablePosition": 8,
       "elo": 1018.47,
-      "leagueAveragePoints": 7.89
+      "leagueAveragePoints": 8.05
     },
     {
       "round": 7,
@@ -100,7 +100,7 @@
       "accumulatedPoints": 11,
       "tablePosition": 8,
       "elo": 1028.53,
-      "leagueAveragePoints": 9.26
+      "leagueAveragePoints": 9.42
     },
     {
       "round": 8,
@@ -114,7 +114,7 @@
       "accumulatedPoints": 11,
       "tablePosition": 8,
       "elo": 1017.4,
-      "leagueAveragePoints": 10.74
+      "leagueAveragePoints": 10.89
     },
     {
       "round": 9,
@@ -128,7 +128,7 @@
       "accumulatedPoints": 11,
       "tablePosition": 10,
       "elo": 1011.46,
-      "leagueAveragePoints": 12.21
+      "leagueAveragePoints": 12.37
     },
     {
       "round": 10,
@@ -142,7 +142,7 @@
       "accumulatedPoints": 12,
       "tablePosition": 11,
       "elo": 1010.34,
-      "leagueAveragePoints": 13.58
+      "leagueAveragePoints": 13.74
     },
     {
       "round": 11,
@@ -156,7 +156,7 @@
       "accumulatedPoints": 13,
       "tablePosition": 12,
       "elo": 1010.29,
-      "leagueAveragePoints": 14.89
+      "leagueAveragePoints": 15.05
     },
     {
       "round": 12,
@@ -170,7 +170,7 @@
       "accumulatedPoints": 13,
       "tablePosition": 13,
       "elo": 1001.43,
-      "leagueAveragePoints": 16.42
+      "leagueAveragePoints": 16.58
     },
     {
       "round": 13,
@@ -184,7 +184,7 @@
       "accumulatedPoints": 16,
       "tablePosition": 11,
       "elo": 1010.31,
-      "leagueAveragePoints": 17.74
+      "leagueAveragePoints": 17.89
     },
     {
       "round": 14,
@@ -198,7 +198,7 @@
       "accumulatedPoints": 17,
       "tablePosition": 13,
       "elo": 1009.92,
-      "leagueAveragePoints": 19.05
+      "leagueAveragePoints": 19.21
     },
     {
       "round": 15,
@@ -212,7 +212,7 @@
       "accumulatedPoints": 17,
       "tablePosition": 17,
       "elo": 1004.27,
-      "leagueAveragePoints": 20.37
+      "leagueAveragePoints": 20.53
     },
     {
       "round": 16,
@@ -226,7 +226,7 @@
       "accumulatedPoints": 18,
       "tablePosition": 15,
       "elo": 1005.43,
-      "leagueAveragePoints": 21.74
+      "leagueAveragePoints": 21.89
     },
     {
       "round": 17,
@@ -240,7 +240,7 @@
       "accumulatedPoints": 21,
       "tablePosition": 13,
       "elo": 1015.38,
-      "leagueAveragePoints": 23.11
+      "leagueAveragePoints": 23.26
     },
     {
       "round": 18,
@@ -254,7 +254,7 @@
       "accumulatedPoints": 21,
       "tablePosition": 16,
       "elo": 1005.49,
-      "leagueAveragePoints": 24.63
+      "leagueAveragePoints": 24.79
     },
     {
       "round": 19,
@@ -268,7 +268,7 @@
       "accumulatedPoints": 21,
       "tablePosition": 16,
       "elo": 996.01,
-      "leagueAveragePoints": 26.11
+      "leagueAveragePoints": 26.26
     },
     {
       "round": 20,
@@ -282,7 +282,7 @@
       "accumulatedPoints": 22,
       "tablePosition": 15,
       "elo": 998.6,
-      "leagueAveragePoints": 27.32
+      "leagueAveragePoints": 27.47
     },
     {
       "round": 22,
@@ -296,7 +296,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 14,
       "elo": 1008.9,
-      "leagueAveragePoints": 29.32
+      "leagueAveragePoints": 29.47
     },
     {
       "round": 23,
@@ -310,7 +310,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 15,
       "elo": 999.42,
-      "leagueAveragePoints": 30.68
+      "leagueAveragePoints": 30.84
     },
     {
       "round": 24,
@@ -324,7 +324,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 16,
       "elo": 989.82,
-      "leagueAveragePoints": 32.16
+      "leagueAveragePoints": 32.32
     },
     {
       "round": 25,
@@ -338,7 +338,7 @@
       "accumulatedPoints": 28,
       "tablePosition": 15,
       "elo": 998.09,
-      "leagueAveragePoints": 33.47
+      "leagueAveragePoints": 33.63
     }
   ],
   "summary": {
