@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-09-04T16:44:15.325Z",
+  "updatedAt": "2026-09-08T17:04:40.572Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -339,20 +339,34 @@
       "tablePosition": 15,
       "elo": 998.09,
       "leagueAveragePoints": 33.63
+    },
+    {
+      "round": 26,
+      "date": "2026-09-07",
+      "opponent": "EC Vitória",
+      "homeAway": "A",
+      "scoreFor": 0,
+      "scoreAgainst": 1,
+      "result": "L",
+      "pointsGained": 0,
+      "accumulatedPoints": 28,
+      "tablePosition": 15,
+      "elo": 987.95,
+      "leagueAveragePoints": 35.16
     }
   ],
   "summary": {
-    "played": 24,
+    "played": 25,
     "wins": 7,
     "draws": 7,
-    "losses": 10,
+    "losses": 11,
     "goalsFor": 27,
-    "goalsAgainst": 32,
+    "goalsAgainst": 33,
     "points": 28,
     "finalPosition": null,
-    "pointsPercentage": 38.9,
-    "averageElo": 1008.96,
-    "eloCovered": 24,
-    "finalElo": 998.09
+    "pointsPercentage": 37.3,
+    "averageElo": 1008.12,
+    "eloCovered": 25,
+    "finalElo": 987.95
   }
 }
