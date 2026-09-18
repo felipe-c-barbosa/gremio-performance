@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-09-15T17:28:51.005Z",
+  "updatedAt": "2026-09-18T16:57:02.227Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -285,6 +285,20 @@
       "leagueAveragePoints": 27.47
     },
     {
+      "round": 21,
+      "date": "2026-09-16",
+      "opponent": "Botafogo FR",
+      "homeAway": "A",
+      "scoreFor": 2,
+      "scoreAgainst": 3,
+      "result": "L",
+      "pointsGained": 0,
+      "accumulatedPoints": 22,
+      "tablePosition": 17,
+      "elo": 969.73,
+      "leagueAveragePoints": 28.42
+    },
+    {
       "round": 22,
       "date": "2026-08-08",
       "opponent": "São Paulo FC",
@@ -296,7 +310,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 14,
       "elo": 1008.9,
-      "leagueAveragePoints": 29.47
+      "leagueAveragePoints": 29.63
     },
     {
       "round": 23,
@@ -310,7 +324,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 15,
       "elo": 999.42,
-      "leagueAveragePoints": 30.84
+      "leagueAveragePoints": 31
     },
     {
       "round": 24,
@@ -324,7 +338,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 16,
       "elo": 989.82,
-      "leagueAveragePoints": 32.32
+      "leagueAveragePoints": 32.47
     },
     {
       "round": 25,
@@ -338,7 +352,7 @@
       "accumulatedPoints": 28,
       "tablePosition": 15,
       "elo": 998.09,
-      "leagueAveragePoints": 33.63
+      "leagueAveragePoints": 33.79
     },
     {
       "round": 26,
@@ -352,21 +366,35 @@
       "accumulatedPoints": 28,
       "tablePosition": 15,
       "elo": 987.95,
-      "leagueAveragePoints": 35.16
+      "leagueAveragePoints": 35.32
+    },
+    {
+      "round": 27,
+      "date": "2026-09-12",
+      "opponent": "CR Vasco da Gama",
+      "homeAway": "H",
+      "scoreFor": 1,
+      "scoreAgainst": 2,
+      "result": "L",
+      "pointsGained": 0,
+      "accumulatedPoints": 28,
+      "tablePosition": 17,
+      "elo": 977.32,
+      "leagueAveragePoints": 36.74
     }
   ],
   "summary": {
-    "played": 25,
+    "played": 27,
     "wins": 7,
     "draws": 7,
-    "losses": 11,
-    "goalsFor": 27,
-    "goalsAgainst": 33,
+    "losses": 13,
+    "goalsFor": 30,
+    "goalsAgainst": 38,
     "points": 28,
     "finalPosition": null,
-    "pointsPercentage": 37.3,
-    "averageElo": 1008.12,
-    "eloCovered": 25,
-    "finalElo": 987.95
+    "pointsPercentage": 34.6,
+    "averageElo": 1005.55,
+    "eloCovered": 27,
+    "finalElo": 977.32
   }
 }
