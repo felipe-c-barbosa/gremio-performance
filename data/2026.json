@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-09-18T16:57:02.227Z",
+  "updatedAt": "2026-09-22T17:31:17.879Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -381,20 +381,34 @@
       "tablePosition": 17,
       "elo": 977.32,
       "leagueAveragePoints": 36.74
+    },
+    {
+      "round": 28,
+      "date": "2026-09-20",
+      "opponent": "SE Palmeiras",
+      "homeAway": "H",
+      "scoreFor": 0,
+      "scoreAgainst": 0,
+      "result": "D",
+      "pointsGained": 1,
+      "accumulatedPoints": 29,
+      "tablePosition": 17,
+      "elo": 974.88,
+      "leagueAveragePoints": 38.16
     }
   ],
   "summary": {
-    "played": 27,
+    "played": 28,
     "wins": 7,
-    "draws": 7,
+    "draws": 8,
     "losses": 13,
     "goalsFor": 30,
     "goalsAgainst": 38,
-    "points": 28,
+    "points": 29,
     "finalPosition": null,
-    "pointsPercentage": 34.6,
-    "averageElo": 1005.55,
-    "eloCovered": 27,
-    "finalElo": 977.32
+    "pointsPercentage": 34.5,
+    "averageElo": 1004.46,
+    "eloCovered": 28,
+    "finalElo": 974.88
   }
 }
