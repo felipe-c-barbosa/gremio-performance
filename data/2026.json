@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-10-02T18:12:36.806Z",
+  "updatedAt": "2026-10-06T18:46:58.931Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -296,7 +296,7 @@
       "accumulatedPoints": 22,
       "tablePosition": 17,
       "elo": 969.73,
-      "leagueAveragePoints": 28.42
+      "leagueAveragePoints": 28.74
     },
     {
       "round": 22,
@@ -310,7 +310,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 14,
       "elo": 1008.9,
-      "leagueAveragePoints": 29.63
+      "leagueAveragePoints": 29.95
     },
     {
       "round": 23,
@@ -324,7 +324,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 15,
       "elo": 999.42,
-      "leagueAveragePoints": 31
+      "leagueAveragePoints": 31.32
     },
     {
       "round": 24,
@@ -338,7 +338,7 @@
       "accumulatedPoints": 25,
       "tablePosition": 16,
       "elo": 989.82,
-      "leagueAveragePoints": 32.47
+      "leagueAveragePoints": 32.79
     },
     {
       "round": 25,
@@ -352,7 +352,7 @@
       "accumulatedPoints": 28,
       "tablePosition": 15,
       "elo": 998.09,
-      "leagueAveragePoints": 33.79
+      "leagueAveragePoints": 34.11
     },
     {
       "round": 26,
@@ -366,7 +366,7 @@
       "accumulatedPoints": 28,
       "tablePosition": 15,
       "elo": 987.95,
-      "leagueAveragePoints": 35.32
+      "leagueAveragePoints": 35.63
     },
     {
       "round": 27,
@@ -380,7 +380,7 @@
       "accumulatedPoints": 28,
       "tablePosition": 17,
       "elo": 977.32,
-      "leagueAveragePoints": 36.74
+      "leagueAveragePoints": 37.05
     },
     {
       "round": 28,
@@ -394,7 +394,7 @@
       "accumulatedPoints": 29,
       "tablePosition": 17,
       "elo": 974.88,
-      "leagueAveragePoints": 38.16
+      "leagueAveragePoints": 38.47
     }
   ],
   "summary": {
