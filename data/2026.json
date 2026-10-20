@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-10-16T17:10:20.020Z",
+  "updatedAt": "2026-10-20T17:46:43.144Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -423,20 +423,34 @@
       "tablePosition": 18,
       "elo": 974.45,
       "leagueAveragePoints": 41.16
+    },
+    {
+      "round": 31,
+      "date": "2026-10-18",
+      "opponent": "Cruzeiro EC",
+      "homeAway": "H",
+      "scoreFor": 2,
+      "scoreAgainst": 4,
+      "result": "L",
+      "pointsGained": 0,
+      "accumulatedPoints": 31,
+      "tablePosition": 18,
+      "elo": 967.73,
+      "leagueAveragePoints": 42.63
     }
   ],
   "summary": {
-    "played": 30,
+    "played": 31,
     "wins": 7,
     "draws": 10,
-    "losses": 13,
-    "goalsFor": 32,
-    "goalsAgainst": 40,
+    "losses": 14,
+    "goalsFor": 34,
+    "goalsAgainst": 44,
     "points": 31,
     "finalPosition": null,
-    "pointsPercentage": 34.4,
-    "averageElo": 1002.45,
-    "eloCovered": 30,
-    "finalElo": 974.45
+    "pointsPercentage": 33.3,
+    "averageElo": 1001.33,
+    "eloCovered": 31,
+    "finalElo": 967.73
   }
 }
