@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-10-23T17:43:03.093Z",
+  "updatedAt": "2026-10-27T18:33:15.992Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -437,20 +437,34 @@
       "tablePosition": 18,
       "elo": 967.73,
       "leagueAveragePoints": 42.63
+    },
+    {
+      "round": 32,
+      "date": "2026-10-26",
+      "opponent": "Coritiba FBC",
+      "homeAway": "A",
+      "scoreFor": 1,
+      "scoreAgainst": 0,
+      "result": "W",
+      "pointsGained": 3,
+      "accumulatedPoints": 34,
+      "tablePosition": 17,
+      "elo": 977.51,
+      "leagueAveragePoints": 43.89
     }
   ],
   "summary": {
-    "played": 31,
-    "wins": 7,
+    "played": 32,
+    "wins": 8,
     "draws": 10,
     "losses": 14,
-    "goalsFor": 34,
+    "goalsFor": 35,
     "goalsAgainst": 44,
-    "points": 31,
+    "points": 34,
     "finalPosition": null,
-    "pointsPercentage": 33.3,
-    "averageElo": 1001.33,
-    "eloCovered": 31,
-    "finalElo": 967.73
+    "pointsPercentage": 35.4,
+    "averageElo": 1000.58,
+    "eloCovered": 32,
+    "finalElo": 977.51
   }
 }
