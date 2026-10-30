@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-10-27T18:33:15.992Z",
+  "updatedAt": "2026-10-30T18:24:47.073Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -451,20 +451,34 @@
       "tablePosition": 17,
       "elo": 977.51,
       "leagueAveragePoints": 43.89
+    },
+    {
+      "round": 33,
+      "date": "2026-10-29",
+      "opponent": "CA Paranaense",
+      "homeAway": "H",
+      "scoreFor": 2,
+      "scoreAgainst": 0,
+      "result": "W",
+      "pointsGained": 3,
+      "accumulatedPoints": 37,
+      "tablePosition": 15,
+      "elo": 989.6,
+      "leagueAveragePoints": 44.95
     }
   ],
   "summary": {
-    "played": 32,
-    "wins": 8,
+    "played": 33,
+    "wins": 9,
     "draws": 10,
     "losses": 14,
-    "goalsFor": 35,
+    "goalsFor": 37,
     "goalsAgainst": 44,
-    "points": 34,
+    "points": 37,
     "finalPosition": null,
-    "pointsPercentage": 35.4,
-    "averageElo": 1000.58,
-    "eloCovered": 32,
-    "finalElo": 977.51
+    "pointsPercentage": 37.4,
+    "averageElo": 1000.25,
+    "eloCovered": 33,
+    "finalElo": 989.6
   }
 }
