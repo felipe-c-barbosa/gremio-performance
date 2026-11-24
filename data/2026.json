@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-11-20T20:55:50.006Z",
+  "updatedAt": "2026-11-24T22:55:27.791Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -493,20 +493,34 @@
       "tablePosition": 18,
       "elo": 987.39,
       "leagueAveragePoints": 48.37
+    },
+    {
+      "round": 36,
+      "date": "2026-11-23",
+      "opponent": "Santos FC",
+      "homeAway": "A",
+      "scoreFor": 2,
+      "scoreAgainst": 0,
+      "result": "W",
+      "pointsGained": 3,
+      "accumulatedPoints": 41,
+      "tablePosition": 15,
+      "elo": 999.22,
+      "leagueAveragePoints": 49.53
     }
   ],
   "summary": {
-    "played": 35,
-    "wins": 9,
+    "played": 36,
+    "wins": 10,
     "draws": 11,
     "losses": 15,
-    "goalsFor": 38,
+    "goalsFor": 40,
     "goalsAgainst": 47,
-    "points": 38,
+    "points": 41,
     "finalPosition": null,
-    "pointsPercentage": 36.2,
+    "pointsPercentage": 38,
     "averageElo": 999.45,
-    "eloCovered": 35,
-    "finalElo": 987.39
+    "eloCovered": 36,
+    "finalElo": 999.22
   }
 }
