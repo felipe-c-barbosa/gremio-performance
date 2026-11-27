@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "team": "Grêmio",
-  "updatedAt": "2026-11-24T22:55:27.791Z",
+  "updatedAt": "2026-11-27T21:49:18.909Z",
   "source": "https://raw.githubusercontent.com/openfootball/south-america/master/brazil/2026_br1.txt + ge.globo.com (jogos API)",
   "rounds": [
     {
@@ -504,9 +504,9 @@
       "result": "W",
       "pointsGained": 3,
       "accumulatedPoints": 41,
-      "tablePosition": 15,
+      "tablePosition": 16,
       "elo": 999.22,
-      "leagueAveragePoints": 49.53
+      "leagueAveragePoints": 49.63
     }
   ],
   "summary": {
